@@ -1,0 +1,78 @@
+.book-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+}
+.big-image {
+  width: 90vw;
+  height: 90vw;
+  object-fit: cover;
+}
+
+.small-images {
+  width: 100%;
+}
+
+.small-images img {
+  width: 40px;
+}
+
+.book-btns {
+  width: 100%;
+}
+
+.add-to-cart {
+  background-color: black;
+  width: 100%;
+  color: blanchedalmond;
+  height: 40px;
+}
+
+.book-description {
+  color: grey;
+  line-height: 25px;
+}
+
+.book-form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  gap: 20px;
+}
+
+.book-form input {
+  height: 40px;
+  padding: 20px;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.book-form input[type='file'] {
+  border: none;
+  padding-bottom: 50px;
+}
+
+.book-form input[type='submit'] {
+  border: none;
+  color: white;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+textarea {
+  height: 80px;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.book-prices {
+  display: flex;
+  gap: 5px;
+}

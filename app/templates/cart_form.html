@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart preview</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/cart.css" />
+  </head>
+  <body>
+    <div class="nav-header">
+      <a href="/">Home</a
+      >&ThickSpace;>&ThickSpace;Cart&ThickSpace;>&ThickSpace;<a
+        href="cart_preview.html"
+        >Items</a
+      >&ThickSpace;> Information
+    </div>
+    <br />
+    <main class="cart-body">
+      <section>
+        <form action="#" method="post" class="cart-form">
+          <div class="cart-form-item">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="cart-form-item">
+            <label for="phone">Phone Number</label>
+            <input type="tel" name="phone" id="phone" />
+          </div>
+          <div class="cart-form-item">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" />
+          </div>
+          <div class="cart-form-item">
+            <label for="location">Pickup Location</label>
+            <select name="location" id="location">
+              <option value="default">Location</option>
+              <option value="Jimbazz">Jimbazz</option>
+              <option value="Jimbazz">Jimbazz</option>
+              <option value="Jimbazz">Jimbazz</option>
+            </select>
+          </div>
+        </form>
+      </section>
+      <section class="cart-summary">
+        <p>Total <b>N10, 100</b></p>
+        <br />
+        <button class="cart-continue">
+          <a href="cart_form.html" style="color: wheat">Make Payment</a>
+        </button>
+      </section>
+    </main>
+  </body>
+</html>

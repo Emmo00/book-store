@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vera's World</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/book_preview.css" />
+  </head>
+  <body>
+    <div class="nav-header">
+      <a href="/admin">Home</a> &ThickSpace;>&ThickSpace;<a href="books.html"
+        >Books</a
+      >&ThickSpace;>&ThickSpace;Book Title
+    </div>
+    <br />
+    <main>
+      <form class="book-form" action="" method="post">
+        <div>
+          <label for="image">Select Book images</label>
+          <input type="file" name="image" id="image" multiple />
+        </div>
+        <div>
+          <label for="book-title">Book Title</label>
+          <br />
+          <input
+            type="text"
+            name="book-title"
+            id="book-title"
+            value="Book Title"
+          />
+        </div>
+        <div>
+          <label for="book-description">Book description</label>
+          <br />
+          <textarea
+            name="book-description"
+            id="book-description"
+            cols="30"
+            rows="10"
+          >
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quibusdam quas sint quae, amet necessitatibus at eligendi tempore quod voluptates consequatur commodi dolores sit, tenetur vero ratione perferendis corporis numquam?</textarea
+          >
+        </div>
+        <div class="book-prices">
+          <div>
+            <label for="original-price">Original Price</label>
+            <input type="text" name="original-price" id="original-price" />
+          </div>
+          <div>
+            <label for="selling-price">Selling Price</label>
+            <input type="text" name="selling-price" id="selling-price" />
+          </div>
+        </div>
+        <input type="submit" value="Save" />
+      </form>
+    </main>
+  </body>
+</html>

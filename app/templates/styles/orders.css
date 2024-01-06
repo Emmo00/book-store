@@ -1,0 +1,82 @@
+:root {
+  --order-sent: grey;
+  --order-on-way: lightgreen;
+  --order-pickup: green;
+  --order-delivered: #0448ff;
+}
+
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px 20px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.orders-body {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.order-list-item {
+  padding: 15px 20px;
+}
+
+.order-list-item article {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  color: black;
+  border-bottom: 2px solid var(--fade);
+}
+
+.order-status {
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.order-status-sent {
+  background-color: var(--order-sent);
+}
+
+.order-status-on-way {
+  background-color: var(--order-on-way);
+}
+
+.order-status-pickup {
+  background-color: var(--order-pickup);
+}
+
+.order-status-delivered {
+  background-color: var(--order-delivered);
+}
+
+.order-body {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order-price {
+  font-size: 70px;
+}
+
+.order-info {
+  line-height: 40px;
+}

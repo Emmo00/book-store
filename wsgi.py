@@ -4,7 +4,15 @@ import sqlalchemy as sa
 import sqlalchemy.orm as so
 
 from app import db
-from app.models import Customer, Book, Order, OrderStatus, BookOrder, PickupLocation
+from app.models import (
+    Customer,
+    Book,
+    Order,
+    OrderStatus,
+    BookOrder,
+    PickupLocation,
+    Image,
+)
 
 app = create_app()
 
@@ -21,4 +29,5 @@ def make_shell_context():
         "BookOrder": BookOrder,
         "OrderStatus": OrderStatus,
         "PickupLocation": PickupLocation,
+        "Image": Image,
     }

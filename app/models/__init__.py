@@ -60,7 +60,7 @@ class Book(BaseModel, db.Model):
     )
 
 
-class Image(db.Model):
+class Image(BaseModel, db.Model):
     path: so.Mapped[str] = so.mapped_column(sa.String(256))
     book_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Book.id))
 

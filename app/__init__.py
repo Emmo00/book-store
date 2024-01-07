@@ -1,4 +1,6 @@
-from flask import Flask
+import os
+
+from flask import Flask, send_from_directory
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_status import FlaskStatus
@@ -20,5 +22,15 @@ def create_app(config=Config):
     migrate.init_app(app, db)
     login.init_app(app)
     FlaskStatus(app)
+
+    from app.views import client_bp
+    from app.views.admin import admin_bp
+    from app.views.api import api_bp
+
+    app.register_blueprint(client_bp)
+    app.register_blueprint(admin_bp)
+    app.register_blueprint(api_bp)
+
+    app.static_folder = "public"
 
     return app

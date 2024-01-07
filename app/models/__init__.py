@@ -12,7 +12,7 @@ from .order_status import OrderStatus
 
 class BaseModel:
     id: so.Mapped[str] = so.mapped_column(
-        sa.String(24), primary_key=True, default=lambda: uuid4()
+        sa.String(24), primary_key=True, index=True, default=lambda: str(uuid4())
     )
     created_at: so.Mapped[datetime] = so.mapped_column(
         default=lambda: datetime.now(timezone.utc)
@@ -21,15 +21,25 @@ class BaseModel:
         default=lambda: datetime.now(timezone.utc)
     )
 
+    def to_json(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 
 class Customer(BaseModel, UserMixin, db.Model):
-    name: so.Mapped[Optional[str]] = so.mapped_column(sa.String(64))
-    email: so.Mapped[Optional[str]] = so.mapped_column(sa.String(120))
-    phone: so.Mapped[Optional[str]] = so.mapped_column(sa.String(24))
+    name: so.Mapped[str] = so.mapped_column(sa.String(64))
+    email: so.Mapped[str] = so.mapped_column(sa.String(120))
+    phone: so.Mapped[str] = so.mapped_column(sa.String(24))
+
+
+class PickupLocation(BaseModel, db.Model):
+    name: so.Mapped[str] = so.mapped_column(sa.String(120))
 
 
 class Order(BaseModel, db.Model):
     customer_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Customer.id))
+    pickup_location_id: so.Mapped[str] = so.mapped_column(
+        sa.ForeignKey(PickupLocation.id)
+    )
     status: so.Mapped[str] = so.mapped_column(
         sa.Enum(OrderStatus), default=OrderStatus.sent
     )

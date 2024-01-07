@@ -2,11 +2,10 @@ from typing import Optional
 from uuid import uuid4
 from datetime import datetime, timezone
 
-from flask_login import UserMixin
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
-from app import db, login
+from app import db
 from .order_status import OrderStatus
 
 
@@ -25,14 +24,11 @@ class BaseModel:
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class Customer(BaseModel, UserMixin, db.Model):
+class Customer(BaseModel, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64))
     email: so.Mapped[str] = so.mapped_column(sa.String(120))
     phone: so.Mapped[str] = so.mapped_column(sa.String(24))
-
-    @login.user_loader
-    def load_user(id):
-        return db.session.get(Customer, id)
+    orders: so.WriteOnlyMapped["Order"] = so.relationship(back_populates="customer")
 
 
 class PickupLocation(BaseModel, db.Model):
@@ -47,6 +43,7 @@ class Order(BaseModel, db.Model):
     status: so.Mapped[str] = so.mapped_column(
         sa.Enum(OrderStatus), default=OrderStatus.sent
     )
+    customer: so.Mapped[Customer] = so.relationship(back_populates="orders")
 
 
 class Book(BaseModel, db.Model):
@@ -58,11 +55,13 @@ class Book(BaseModel, db.Model):
     selling_price: so.Mapped[float] = so.mapped_column(
         sa.DECIMAL(precision=12, scale=2)
     )
+    images: so.WriteOnlyMapped["Image"] = so.relationship(back_populates="book")
 
 
 class Image(BaseModel, db.Model):
     path: so.Mapped[str] = so.mapped_column(sa.String(256))
     book_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Book.id))
+    book: so.Mapped[Book] = so.relationship(back_populates="images")
 
 
 class BookOrder(BaseModel, db.Model):

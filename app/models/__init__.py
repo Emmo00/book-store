@@ -6,7 +6,7 @@ from flask_login import UserMixin
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
-from app import db
+from app import db, login
 from .order_status import OrderStatus
 
 
@@ -29,6 +29,10 @@ class Customer(BaseModel, UserMixin, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64))
     email: so.Mapped[str] = so.mapped_column(sa.String(120))
     phone: so.Mapped[str] = so.mapped_column(sa.String(24))
+
+    @login.user_loader
+    def load_user(id):
+        return db.session.get(Customer, id)
 
 
 class PickupLocation(BaseModel, db.Model):

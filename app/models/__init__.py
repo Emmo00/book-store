@@ -60,6 +60,11 @@ class Book(BaseModel, db.Model):
     )
 
 
+class Image(db.Model):
+    path: so.Mapped[str] = so.mapped_column(sa.String(256))
+    book_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Book.id))
+
+
 class BookOrder(BaseModel, db.Model):
     book_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Book.id))
     order_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Order.id))

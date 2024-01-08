@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 import sqlalchemy as sa
 import sqlalchemy.orm as so
+import inflection
 
 from app import db
 from .order_status import OrderStatus
@@ -11,7 +12,7 @@ from .order_status import OrderStatus
 
 class BaseModel:
     id: so.Mapped[str] = so.mapped_column(
-        sa.String(24), primary_key=True, index=True, default=lambda: str(uuid4())
+        sa.String(36), primary_key=True, index=True, default=lambda: str(uuid4())
     )
     created_at: so.Mapped[datetime] = so.mapped_column(
         default=lambda: datetime.now(timezone.utc)
@@ -56,6 +57,10 @@ class Book(BaseModel, db.Model):
         sa.DECIMAL(precision=12, scale=2)
     )
     images: so.WriteOnlyMapped["Image"] = so.relationship(back_populates="book")
+
+    @property
+    def slug(self):
+        return inflection.parameterize(self.title)
 
 
 class Image(BaseModel, db.Model):

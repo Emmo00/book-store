@@ -7,4 +7,6 @@ class Config:
     SQLALCHEMY_DATABASE_URI = getenv("DATABASE_URI") or "sqlite:///verasworld.db"
     SESSION_TYPE = "sqlalchemy"
     SESSION_PERMANENT = True
-    PERMANENT_SESSION_LIFETIME = timedelta(days=3650)
+    SESSION_COOKIE_NAME = "X-Auth"
+    PERMANENT_SESSION_LIFETIME = timedelta(seconds=315360000)
+    BOOKS_PER_PAGE = 16

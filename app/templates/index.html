@@ -1,120 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vera's World</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
-  </head>
-  <body>
-    <nav>
-      <h1 class="logo"><a href="/" style="color: black">Vera's World</a></h1>
-      <div class="nav-items">
-        <div class="orders nav-item"><a href="orders.html">Orders</a></div>
-        <div class="cart nav-item"><a href="cart_preview.html">Cart</a></div>
-      </div>
-    </nav>
-    <br />
-    <br />
-    <br />
-    <main>
-      <div class="search">
-        <input
-          class="br-5"
-          type="search"
-          name="search"
-          id="search"
-          placeholder="Search Books"
-        />
-      </div>
+{% extends 'base.html' %}
 
-      <section class="books">
-        <article class="book-container">
-          <a href="book_preview.html">
-            <img class="br-5" src="/static/assets/book.png" alt="Book" />
-          </a>
-          <div>
-            <p class="book-title">Book Title</p>
-            <p class="book-price"><b>N10, 100</b></p>
-            <div class="book-btns">
-              <button class="book-btn btn-sub">-</button> 0
-              <button class="book-btn btn-add">+</button>
-            </div>
-          </div>
-        </article>
-        <article class="book-container">
-          <img class="br-5" src="/static/assets/book.png" alt="Book" />
-          <div>
-            <p class="book-title">Book Title</p>
-            <p class="book-price"><b>N10, 100</b></p>
-            <div class="book-btns">
-              <button class="book-btn btn-add">-</button> 0
-              <button class="book-btn btn-add">+</button>
-            </div>
-          </div>
-        </article>
-        <article class="book-container">
-          <img class="br-5" src="/static/assets/book.png" alt="Book" />
-          <div>
-            <p class="book-title">Book Title</p>
-            <p class="book-price"><b>N10, 100</b></p>
-            <div class="book-btns">
-              <button class="book-btn btn-add">-</button> 0
-              <button class="book-btn btn-add">+</button>
-            </div>
-          </div>
-        </article>
-        <article class="book-container">
-          <img class="br-5" src="/static/assets/book.png" alt="Book" />
-          <div>
-            <p class="book-title">Book Title</p>
-            <p class="book-price"><b>N10, 100</b></p>
-            <div class="book-btns">
-              <button class="book-btn btn-add">-</button> 0
-              <button class="book-btn btn-add">+</button>
-            </div>
-          </div>
-        </article>
-        <article class="book-container">
-          <img class="br-5" src="/static/assets/book.png" alt="Book" />
-          <div>
-            <p class="book-title">Book Title</p>
-            <p class="book-price"><b>N10, 100</b></p>
-            <div class="book-btns">
-              <button class="book-btn btn-add">-</button> 0
-              <button class="book-btn btn-add">+</button>
-            </div>
-          </div>
-        </article>
-        <article class="book-container">
-          <img class="br-5" src="/static/assets/book.png" alt="Book" />
-          <div>
-            <p class="book-title">Book Title</p>
-            <p class="book-price"><b>N10, 100</b></p>
-            <div class="book-btns">
-              <button class="book-btn btn-add">-</button> 0
-              <button class="book-btn btn-add">+</button>
-            </div>
-          </div>
-        </article>
-      </section>
-      <section class="pagination">
-        <button>Previous Page</button> <button>Next Page</button>
-      </section>
-    </main>
-    <footer>
-      <h3>Vera's World</h3>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste excepturi,
-        officia aut error maiores at, a quod et id quidem laboriosam delectus
-        explicabo. Vero ipsa quia recusandae! Obcaecati, tenetur placeat?
-      </p>
-      <br />
-      <h3>CONTACT US</h3>
-      <a href="mailto:vera@vera.com">vera@vera.com</a>
-      <br />
-      <br />
-      <a href="tel:+2341234567890">+2341234567890</a>
-    </footer>
-  </body>
-</html>
+{% block content %}
+<div class="search">
+  <input
+    class="br-5"
+    type="search"
+    name="search"
+    id="search"
+    placeholder="Search Books"
+  />
+</div>
+
+<section class="books">
+  {% for book in books %}
+    {% include '_book.html' %}
+  {% endfor %}
+</section>
+<section class="pagination">
+  {% if prev_url %}
+    <button><a href="{{ prev_url }}">Previous Page</a></button>
+  {% endif %}
+  {% if next_url %}
+    <button><a href="{{ next_url }}">Next Page</a></button>
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block footer %}
+  {% include '_footer.html' %}
+{% endblock footer %}

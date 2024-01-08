@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% if title %}
+        <title>{{ title }} - Vera's World</title>
+    {% else %}
+        <title>Vera's World</title>
+    {% endif %}
+    <link rel="stylesheet" href="/static/styles/main.css" />
+    {% block styles %}
+    {% endblock styles %}
+  </head>
+  <body>
+    <nav>
+        {% block nav %}
+            {% include '_nav_bar.html' %}
+        {% endblock nav %}
+    </nav>
+    <br />
+    <br />
+    <br />
+    <main>
+     {% block content %}
+     {% endblock content %}
+    </main>
+    <footer>
+        {% block footer %}
+        {% endblock footer %}
+    </footer>
+  </body>
+</html>

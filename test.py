@@ -10,7 +10,7 @@ from app.models import Customer, Book, Order, OrderStatus, BookOrder, PickupLoca
 c = Customer(name="emma", email="email@email.com", phone="1234567890")
 pl = PickupLocation(name="Jimbazz")
 book = Book(
-    title="GSP101", description="gsp 101", original_price=1500, selling_price=1700
+    title="MTH121", description="math 121", original_price=1500, selling_price=1700
 )
 
 db.session.add_all([c, pl, book])

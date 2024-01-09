@@ -8,6 +8,8 @@
 .big-image {
   width: 90vw;
   height: 90vw;
+  max-width: 50vh;
+  max-height: 50vh;
   object-fit: cover;
 }
 
@@ -17,6 +19,7 @@
 
 .small-images img {
   width: 40px;
+  height: 40px;
 }
 
 .book-btns {

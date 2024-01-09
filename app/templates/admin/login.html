@@ -1,40 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vera's World</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
-  </head>
-  <body>
-    <nav>
-      <h1 class="logo">
-        <a href="/admin" style="color: black">Vera's <small>world.</small></a>
-      </h1>
-      <div class="nav-items">
-        <div class="orders nav-item"><a href="orders.html">Orders</a></div>
-        <div class="nav-item"><a href="books.html">Books</a></div>
-        <div class="nav-item"><a href="shopping.html">Shopping</a></div>
-      </div>
-    </nav>
-    <br />
-    <br />
-    <br />
-    <main>
-      <form action="" method="post" class="login-form">
-        <label for="username">Username</label>
-        <br />
-        <input type="text" name="username" id="username" />
-        <br />
-        <br />
-        <label for="password">Password</label>
-        <br />
-        <input type="password" name="password" id="password" />
-        <br />
-        <br />
-        <br />
-        <input type="submit" value="Login" class="login-btn" />
-      </form>
-    </main>
-  </body>
-</html>
+{% extends 'admin/base.html' %}
+
+
+{% block nav_items %}
+{% endblock nav_items %}
+
+
+{% block content %}
+<br>
+<br>
+<br>
+<form action="" method="post" class="login-form" novalidate>
+  {{ form.hidden_tag() }}
+  {{ form.username.label }}
+  <br />
+  {{ form.username() }}
+  <br>
+  {% for error in form.username.errors %}
+    <span style="color: red;">{{ error }}</span>
+  {% endfor %}
+  <br />
+  <br />
+  {{ form.password.label }}
+  <br />
+  {{ form.password() }}
+  <br>
+  {% for error in form.password.errors %}
+    <span style="color: red;">{{ error }}</span>
+  {% endfor %}
+  <br />
+  <br />
+  <br />
+  {{ form.submit(class='login-btn') }}
+</form>
+{% endblock content %}

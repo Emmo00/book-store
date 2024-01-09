@@ -1,61 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vera's World</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
-  </head>
-  <body>
-    <nav>
-      <h1 class="logo">
-        <a href="/admin" style="color: black">Vera's <small>world.</small></a>
-      </h1>
-      <div class="nav-items">
-        <div class="orders nav-item"><a href="orders.html">Orders</a></div>
-        <div class="nav-item"><a href="books.html">Books</a></div>
-        <div class="nav-item"><a href="shopping.html">Shopping</a></div>
-      </div>
-    </nav>
+{% extends 'admin/base.html' %}
+
+
+{% block content %}
+<div class="dash-cards">
+  <div class="dash-card">
+    <h1>10</h1>
+    pending orders
+    <br />
+    <a href="orders.html">view ></a>
+  </div>
+  <div class="dash-card">
+    <h1>30</h1>
+    Books
+    <br />
+    <a href="books.html">view ></a>
+  </div>
+  <div class="dash-card">
+    <h1>20</h1>
+    Shopping List items
+    <br />
+    <a href="shopping.html">view ></a>
+  </div>
+  <div class="dash-card">
+    <h1>20</h1>
+    New Customers This month
+    <br />
+    3% up
+  </div>
+  <div class="dash-card">
+    <h1>N100,000</h1>
+    Revenue This month
     <br />
     <br />
+    <p>40% up</p>
     <br />
-    <main>
-      <div class="dash-cards">
-        <div class="dash-card">
-          <h1>10</h1>
-          pending orders
-          <br />
-          <a href="orders.html">view ></a>
-        </div>
-        <div class="dash-card">
-          <h1>30</h1>
-          Books
-          <br />
-          <a href="books.html">view ></a>
-        </div>
-        <div class="dash-card">
-          <h1>20</h1>
-          Shopping List items
-          <br />
-          <a href="shopping.html">view ></a>
-        </div>
-        <div class="dash-card">
-          <h1>20</h1>
-          New Customers This month
-          <br />
-          3% up
-        </div>
-        <div class="dash-card">
-          <h1>N100,000</h1>
-          Revenue This month
-          <br />
-          <br />
-          <p>40% up</p>
-          <br />
-          <a href="shopping.html">view ></a>
-        </div>
-      </div>
-    </main>
-  </body>
-</html>
+    <a href="shopping.html">view ></a>
+  </div>
+</div>
+{% endblock content %}

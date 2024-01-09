@@ -1,0 +1,13 @@
+<a href="{{ url_for('admin.books.book', book_id=book.id)}}">
+    <section class="book-list-item">
+      <article>
+        <div class="book-image">
+          <img src={{ book.main_image or "/static/assets/book.png" }} alt="Book Title" />
+        </div>
+        <div class="book-details">
+          <h3>{{ book.title}}</h3>
+          <p>Price: N{{ book.selling_price }}</p>
+        </div>
+      </article>
+    </section>
+</a>

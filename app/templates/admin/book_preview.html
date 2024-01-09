@@ -1,59 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vera's World</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
+{% extends 'admin/base.html' %}
+
+
+{% block styles %}
     <link rel="stylesheet" href="/static/styles/book_preview.css" />
-  </head>
-  <body>
+{% endblock %}
+
+
+{% block nav %}
     <div class="nav-header">
-      <a href="/admin">Home</a> &ThickSpace;>&ThickSpace;<a href="books.html"
-        >Books</a
-      >&ThickSpace;>&ThickSpace;Book Title
+      <a href="{{ url_for('admin.index') }}">Home</a>&ThickSpace;>&ThickSpace;<a href="{{ url_for('admin.books.books') }}">Books</a>&ThickSpace;>&ThickSpace;{{ book.title or 'New' }}
     </div>
-    <br />
+{% endblock nav %}
+
+
+{% block content %}
     <main>
-      <form class="book-form" action="" method="post">
+      <form class="book-form" action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag()}}
         <div>
-          <label for="image">Select Book images</label>
-          <input type="file" name="image" id="image" multiple />
+          {{ form.images.label }}
+          {{ form.images() }}
+          <br>
+          {% for error in form.images.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
         </div>
         <div>
-          <label for="book-title">Book Title</label>
+          {{ form.title.label }}
           <br />
-          <input
-            type="text"
-            name="book-title"
-            id="book-title"
-            value="Book Title"
-          />
+          {{ form.title() }}
+          <br>
+          {% for error in form.title.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
         </div>
         <div>
-          <label for="book-description">Book description</label>
+          {{ form.description.label }}
           <br />
-          <textarea
-            name="book-description"
-            id="book-description"
-            cols="30"
-            rows="10"
-          >
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quibusdam quas sint quae, amet necessitatibus at eligendi tempore quod voluptates consequatur commodi dolores sit, tenetur vero ratione perferendis corporis numquam?</textarea
-          >
+          {{ form.description() }}
+          <br>
+          {% for error in form.description.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
         </div>
         <div class="book-prices">
           <div>
-            <label for="original-price">Original Price</label>
-            <input type="text" name="original-price" id="original-price" />
+            {{ form.original_price.label }}
+            {{ form.original_price() }}
+            <br>
+            {% for error in form.original_price.errors %}
+              <span style="color: red;">{{ error }}</span>
+            {% endfor %}
           </div>
           <div>
-            <label for="selling-price">Selling Price</label>
-            <input type="text" name="selling-price" id="selling-price" />
+            {{ form.selling_price.label }}
+            {{ form.selling_price() }}
+            <br>
+            {% for error in form.selling_price.errors %}
+              <span style="color: red;">{{ error }}</span>
+            {% endfor %}
           </div>
         </div>
-        <input type="submit" value="Save" />
+        {{ form.submit() }}
       </form>
     </main>
-  </body>
-</html>
+{% endblock content %}

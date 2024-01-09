@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% if title %}
+        <title>{{ title }} - Vera's World Admin</title>
+    {% else %}
+        <title>Vera's World Admin</title>
+    {% endif %}
+    <link rel="stylesheet" href="/static/styles/main.css" />
+    {% block styles %}
+    {% endblock styles %}
+  </head>
+  <body>
+        {% block nav %}
+            {% include 'admin/_nav_bar.html' %}
+        {% endblock nav %}
+    <br />
+    <br />
+    <br />
+    <main>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      {% block content %}
+      {% endblock content %}
+    </main>
+  </body>
+</html>

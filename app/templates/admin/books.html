@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart preview</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
+{% extends 'admin/base.html' %}
+
+
+{% block styles %}
     <link rel="stylesheet" href="/static/styles/books.css" />
-  </head>
-  <body>
+{% endblock styles %}
+
+
+{% block nav %}
     <div class="nav-header">
-      <a href="/admin">Home</a> &ThickSpace;>&ThickSpace;Books
+      <a href="{{ url_for('admin.index') }}">Home</a>&ThickSpace;>&ThickSpace;Books
     </div>
-    <br />
+{% endblock nav %}
+
+
+{% block content %}
     <main class="books-body">
-      <a href="book_preview.html"><div class="add-book">Add Book</div></a>
-      <a href="book_preview.html">
-        <section class="book-list-item">
-          <article>
-            <div class="book-image">
-              <img src="..//static/assets/book.png" alt="Book Title" />
-            </div>
-            <div class="book-details">
-              <h3>Book Title</h3>
-              <p>Price: N10, 100</p>
-            </div>
-          </article>
-        </section>
-      </a>
+      <a href="{{ url_for('admin.books.add_book') }}"><div class="add-book">Add Book</div></a>
+      <br>
+      {% for book in books %}
+        {% include 'admin/_book.html' %}
+      {% endfor %}
     </main>
-  </body>
-</html>
+{% endblock content %}

@@ -1,4 +1,6 @@
-from flask import Flask
+from os import path
+
+from flask import Flask, send_from_directory, send_file
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_status import FlaskStatus
@@ -30,5 +32,9 @@ def create_app(config=Config):
     app.register_blueprint(api_bp)
 
     app.static_folder = "public"
+
+    @app.route("/uploads/<path:file_name>")
+    def uploads(file_name):
+        return send_file(path.join("..", app.config["UPLOADS_FOLDER"], file_name))
 
     return app

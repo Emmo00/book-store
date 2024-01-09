@@ -27,6 +27,33 @@ nav {
   backdrop-filter: blur(8px);
 }
 
+@keyframes alert {
+  0% { transform: translate(-50%, -100%); visibility: visible;}
+  20% { transform: translate(-50%, 0); }
+  100% { visibility: hidden;}
+}
+
+.alert {
+  position: fixed;
+  background-color: black;
+  color: wheat;
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 80vw;
+  transform: translateX(-50%);
+  margin: 0 50%;
+  right: auto;
+  padding: 20px 10px;
+  border-radius: 5px;
+  margin-bottom: 4px;
+  animation-name: alert;
+  animation-duration: 2.5s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+}
+
 .logo {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;

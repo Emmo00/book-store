@@ -1,6 +1,6 @@
 <article class="book-container" data-book-id="{{ book.id }}">
     <a href="{{ url_for('client.books.book', book_id=book.id, book_slug=book.slug) }}">
-      <img class="br-5" src={{ book.images[0] or "/static/assets/book.png"}} alt="{{ book.title }}" />
+      <img class="br-5" src={{ book.main_image or "/static/assets/book.png"}} alt="{{ book.title }}" />
     </a>
     <div>
       <p class="book-title">{{ book.title }}</p>

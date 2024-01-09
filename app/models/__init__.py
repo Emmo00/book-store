@@ -2,6 +2,7 @@ from typing import Optional
 from uuid import uuid4
 from datetime import datetime, timezone
 
+from flask import url_for
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 import inflection
@@ -62,11 +63,24 @@ class Book(BaseModel, db.Model):
     def slug(self):
         return inflection.parameterize(self.title)
 
+    @property
+    def main_image(self):
+        return db.session.scalar(self.images.select().limit(1)).path
+
+    @property
+    def other_images(self):
+        images = db.session.scalars(self.images.select())
+        return [image.path for image in images]
+
 
 class Image(BaseModel, db.Model):
-    path: so.Mapped[str] = so.mapped_column(sa.String(256))
+    name: so.Mapped[str] = so.mapped_column(sa.String(256))
     book_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Book.id))
     book: so.Mapped[Book] = so.relationship(back_populates="images")
+
+    @property
+    def path(self):
+        return url_for("uploads", file_name=self.name)
 
 
 class BookOrder(BaseModel, db.Model):

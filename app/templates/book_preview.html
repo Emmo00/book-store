@@ -9,10 +9,11 @@
 {% block content %}
 <section class="book-preview-container" data-book-id="{{ book.id }}">
   <h1>{{ book.title }}</h1>
-  <img src="/static/assets/book.png" alt="Book title" class="big-image br-5" />
+  <img src={{ book.main_image or "/static/assets/book.png"}} alt="Book title" class="big-image br-5" />
   <div class="small-images">
-    <img src="/static/assets/book.png" alt="Book title" class="br-5" />
-    <img src="/static/assets/book.png" alt="Book title" class="br-5" />
+    {% for image in book.other_images %}
+      <img src={{ image }} alt="{{ book.title }}" class="br-5" />
+    {% endfor %}
   </div>
   <div><h2>N{{ book.selling_price }}</h2></div>
   <div class="book-btns">

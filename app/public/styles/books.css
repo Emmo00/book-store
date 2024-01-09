@@ -21,7 +21,9 @@
 }
 
 .book-image img {
-  width: 30vw;
+  width: 40vw;
+  height: 40vw;
+  object-fit: cover;
   flex: 1;
 }
 

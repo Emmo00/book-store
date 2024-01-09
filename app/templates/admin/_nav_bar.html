@@ -1,0 +1,13 @@
+<nav>
+  <h1 class="logo">
+      <a href="{{ url_for('admin.index') }}" style="color: black">Vera's</a>
+    </h1>
+    <div class="nav-items">
+      {% block nav_items %}
+      <div class="orders nav-item"><a href="{{ url_for('admin.orders.orders') }}">Orders</a></div>
+      <div class="nav-item"><a href="{{ url_for('admin.books.books') }}">Books</a></div>
+      <div class="nav-item"><a href="{{ url_for('admin.shopping.shopping') }}">Shopping</a></div>
+      <div class="nav-item"><a href="{{ url_for('admin.auth.logout') }}">Logout</a></div>
+      {% endblock nav_items %}
+  </div>
+</nav>

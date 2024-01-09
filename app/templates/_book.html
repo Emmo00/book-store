@@ -1,13 +1,13 @@
-<article class="book-container" data-book-id="{{ book.id }}">
+<article class="book-container">
     <a href="{{ url_for('client.books.book', book_id=book.id, book_slug=book.slug) }}">
-      <img class="br-5" src={{ book.main_image or "/static/assets/book.png"}} alt="{{ book.title }}" />
+      <img class="br-5" src={{ book.main_image }} alt="{{ book.title }}" />
     </a>
     <div>
       <p class="book-title">{{ book.title }}</p>
       <p class="book-price"><b>N{{ book.selling_price }}</b></p>
       <div class="book-btns">
-        <button class="book-btn btn-sub">-</button> 0
-        <button class="book-btn btn-add">+</button>
+        <button class="book-btn btn-sub" data-book-id="{{ book.id }}">-</button> 0
+        <button class="book-btn btn-add" data-book-id="{{ book.id }}">+</button>
       </div>
     </div>
 </article>

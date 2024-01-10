@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.form import _Auto
 from wtforms import (
     StringField,
     PasswordField,
@@ -8,6 +9,10 @@ from wtforms import (
     MultipleFileField,
 )
 from wtforms.validators import DataRequired, Email, ValidationError
+import sqlalchemy as sa
+
+from app.models import Book
+from app import db
 
 
 class AdminLoginForm(FlaskForm):
@@ -20,11 +25,21 @@ class AdminBookForm(FlaskForm):
     images = MultipleFileField(
         "Select Book Images", validators=[], render_kw={"multiple": True}
     )
+
+    def __init__(self, original_title, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.original_title = original_title
+
     title = StringField("Book Title", validators=[DataRequired()])
     description = TextAreaField("Book description", validators=[DataRequired()])
     original_price = StringField("Original Price", validators=[DataRequired()])
     selling_price = StringField("Selling Price", validators=[DataRequired()])
     submit = SubmitField("Save")
+
+    def validate_title(self, title):
+        book = db.session.scalar(sa.select(Book).where(Book.title == title.data))
+        if book and book.title != self.original_title:
+            raise ValidationError("Book with this title already exists")
 
     def validate_original_price(self, original_price):
         try:

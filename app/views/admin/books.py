@@ -31,7 +31,7 @@ def books():
 @books_bp.route("/<book_id>", methods=["GET", "POST"])
 def book(book_id):
     book: Book = db.first_or_404(sa.select(Book).where(Book.id == book_id))
-    form = AdminBookForm()
+    form = AdminBookForm(book.title)
     if form.validate_on_submit():
         files = request.files.getlist("images")
         if len(files) >= 0:
@@ -99,8 +99,6 @@ def add_book():
                 bottom = (image.height + crop_size) // 2
                 # crop and resize
                 cropped_img = image.crop((left, top, right, bottom)).resize((390, 390))
-                print(cropped_img.width, "X", cropped_img.height)
-                print(image.width, "X", image.height)
                 webp_name = f"{path.splitext(file_save_path)[0]}.webp"
                 cropped_img.save(webp_name, optimize=True)
                 try:
@@ -119,7 +117,7 @@ def add_book():
         db.session.add_all(images)
         db.session.commit()
         flash("Book Saved")
-        return redirect(url_for("admin.books.books"))
+        return redirect(url_for("admin.books.add_book"))
     return render_template(
         "admin/book_preview.html", title="New Book", form=form, book=book
     )

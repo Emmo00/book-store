@@ -5,7 +5,7 @@ orders_bp = Blueprint("orders", __name__, url_prefix="/orders")
 
 @orders_bp.route("/", strict_slashes=False)
 def orders():
-    return render_template("orders.html")
+    return render_template("orders.html", title="Orders")
 
 
 @orders_bp.route("/<order_id>", strict_slashes=False)

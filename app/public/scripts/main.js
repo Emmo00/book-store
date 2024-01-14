@@ -104,3 +104,14 @@ document.querySelectorAll('.btn-sub').forEach((button) => {
     removeBookFromCart(button.dataset.bookId);
   });
 });
+// add to cart button
+document
+  .querySelector('button.add-to-cart')
+  .addEventListener('click', function () {
+    bookId = this.dataset.bookId;
+    orders.addOrder(bookId);
+    document.querySelector(`.bq-${bookId}`).innerHTML =
+      orders.getBookOrderCount(bookId);
+    showAlert('Item added');
+    updateCartBadge();
+  });

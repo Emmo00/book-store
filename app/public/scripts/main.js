@@ -64,6 +64,7 @@ function showAlert(message) {
 
 function updateCartBadge() {
   const cartBade = document.querySelector('.cart .badge');
+  if (!cartBade) return;
   const orderCount = orders.getTotalOrderCount();
   if (orderCount === 0) {
     cartBade.className = 'badge display-none';
@@ -76,6 +77,14 @@ function updateCartBadge() {
 // declare global and initialize stuff
 const orders = new Orders();
 updateCartBadge();
+updateAllBookQuantity();
+
+function updateAllBookQuantity() {
+  document.querySelectorAll('[class^=bq]').forEach((bookQuantity) => {
+    const bookId = bookQuantity.className.replace('bq-', '');
+    bookQuantity.innerHTML = orders.getBookOrderCount(bookId);
+  });
+}
 
 // cart action buttons
 function addBookToCart(bookId) {
@@ -107,7 +116,7 @@ document.querySelectorAll('.btn-sub').forEach((button) => {
 // add to cart button
 document
   .querySelector('button.add-to-cart')
-  .addEventListener('click', function () {
+  ?.addEventListener('click', function () {
     bookId = this.dataset.bookId;
     orders.addOrder(bookId);
     document.querySelector(`.bq-${bookId}`).innerHTML =

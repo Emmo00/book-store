@@ -17,7 +17,13 @@ document.querySelector('.cart-continue').addEventListener('click', async () => {
     showAlert('Invalid Email address');
     return;
   }
-  const payload = { fname, phone, email, location, orders: orders.orders };
+  const payload = {
+    name: fname,
+    phone,
+    email,
+    location,
+    books: orders.orders,
+  };
   console.log(payload);
   const response = await fetch('/api/orders', {
     method: 'POST',
@@ -27,8 +33,12 @@ document.querySelector('.cart-continue').addEventListener('click', async () => {
     },
     body: JSON.stringify(payload),
   });
+  if (!response.ok) {
+    showAlert('Error Processing order. Please Try again later');
+    return;
+  }
   const data = (await response.json()).data;
-  document.location = data.url;
+  document.location = data.link;
 });
 
 function validPhone(phone) {

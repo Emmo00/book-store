@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from .books import books_bp
 from .cart import cart_bp
 from .order import orders_bp
-from app.models import Book
+from app.models import Book, Order
 from app import db
 
 client_bp = Blueprint("client", __name__)
@@ -26,6 +26,16 @@ def index():
     return render_template(
         "index.html", books=books.items, next_url=next_url, prev_url=prev_url
     )
+
+
+@client_bp.route("/payment-complete")
+def payment_complete():
+    status = request.args.to_dict().get("status")
+    order_id = request.args.to_dict().get("tx_ref")
+    if status != "failed":
+        order = db.session.scalar(sa.select(Order).where(Order.id == order_id))
+        return render_template("payment_successful.html", order=order)
+    return render_template("payment_failed.html")
 
 
 client_bp.register_blueprint(books_bp)

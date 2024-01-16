@@ -8,7 +8,7 @@ import sqlalchemy.orm as so
 import inflection
 
 from app import db
-from .order_status import OrderStatus
+from app.helpers.order_status import OrderStatus
 
 
 class BaseModel:
@@ -43,7 +43,7 @@ class Order(BaseModel, db.Model):
         sa.ForeignKey(PickupLocation.id)
     )
     status: so.Mapped[str] = so.mapped_column(
-        sa.Enum(OrderStatus), default=OrderStatus.sent
+        sa.Enum(OrderStatus), default=OrderStatus.pending
     )
     customer: so.Mapped[Customer] = so.relationship(back_populates="orders")
 

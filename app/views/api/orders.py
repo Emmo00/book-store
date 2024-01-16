@@ -25,13 +25,15 @@ def create_order():
         return jsonify({"message": "Incomplete information"}), 400
     # CREATE CUSTOMER
     customer_id = session.get("user_id") or str(uuid4())
-    customer = Customer(
-        id=customer_id,
-        name=payload.get("name"),
-        phone=payload.get("phone"),
-        email=payload.get("email"),
-    )
-    db.session.add(customer)
+    customer = db.session.scalar(sa.select(Customer).where(Customer.id == customer_id))
+    if not customer:
+        customer = Customer(
+            id=customer_id,
+            name=payload.get("name"),
+            phone=payload.get("phone"),
+            email=payload.get("email"),
+        )
+        db.session.add(customer)
     # CREATE ORDER
     order_id = str(uuid4())
     order = Order(
@@ -52,6 +54,7 @@ def create_order():
             book_orders.append(book_order)
             total += book.selling_price * int(payload.get("books").get(book_id))
     db.session.add_all(book_orders)
+    db.session.commit()
     # CREATE FLUTTERWAVE PAYMENT
     payment = create_payment(
         order_id, total, customer_id, customer.name, customer.email, customer.phone
@@ -61,10 +64,3 @@ def create_order():
         session["user_id"] = customer_id
         return jsonify(payment)
     return jsonify({"message": "Error creating payment"}), 500
-
-
-@orders_bp.route("/webhook-callback", methods=["POST"])
-def webhook_callback():
-    # CONFIRM ORDER
-    # UPDATE ORDER
-    pass

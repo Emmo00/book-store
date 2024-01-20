@@ -1,0 +1,13 @@
+<a href="{{ url_for('admin.locations.location', location_id=location.id)}}">
+    <section class="book-list-item">
+      <article>
+        <div class="book-image">
+          <img src={{ location.main_image }} alt="{{ location.name }}" />
+        </div>
+        <div class="book-details">
+          <h3>{{ location.name}}</h3>
+          <p>{{ location.description }}</p>
+        </div>
+      </article>
+    </section>
+</a>

@@ -1,0 +1,49 @@
+{% extends 'admin/base.html' %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="/static/styles/book_preview.css" />
+{% endblock %}
+
+
+{% block nav %}
+    <div class="nav-header">
+      <a href="{{ url_for('admin.index') }}">Home</a>&ThickSpace;>&ThickSpace;<a href="{{ url_for('admin.locations.locations') }}">Locations</a>&ThickSpace;>&ThickSpace;{{ location.name or 'New' }}
+    </div>
+{% endblock nav %}
+
+
+{% block content %}
+    <main>
+      <form class="book-form" action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag()}}
+        <div>
+          {{ form.images.label }}
+          {{ form.images() }}
+          <br>
+          {% for error in form.images.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div>
+          {{ form.name.label }}
+          <br />
+          {{ form.name() }}
+          <br>
+          {% for error in form.name.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
+        </div>
+        <div>
+          {{ form.description.label }}
+          <br />
+          {{ form.description() }}
+          <br>
+          {% for error in form.description.errors %}
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
+        </div>
+        {{ form.submit() }}
+      </form>
+    </main>
+{% endblock content %}

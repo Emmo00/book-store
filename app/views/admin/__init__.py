@@ -6,6 +6,7 @@ from .books import books_bp
 from .orders import orders_bp
 from .shopping import shopping_bp
 from .withdraw import withdraw_bp
+from .locations import location_bp
 
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -23,6 +24,7 @@ admin_bp.register_blueprint(books_bp)
 admin_bp.register_blueprint(orders_bp)
 admin_bp.register_blueprint(shopping_bp)
 admin_bp.register_blueprint(withdraw_bp)
+admin_bp.register_blueprint(location_bp)
 
 
 @admin_bp.before_request

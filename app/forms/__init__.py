@@ -11,7 +11,7 @@ from wtforms import (
 from wtforms.validators import DataRequired, Email, ValidationError
 import sqlalchemy as sa
 
-from app.models import Book
+from app.models import Book, PickupLocation
 from app import db
 
 
@@ -54,3 +54,24 @@ class AdminBookForm(FlaskForm):
             raise ValidationError("Selling Price must be in Number or Decimal format")
         if float(selling_price.data) < float(self.original_price.data):
             raise ValidationError("Selling Price must be greater than Original Price")
+
+
+class AdminLocationForm(FlaskForm):
+    images = MultipleFileField(
+        "Select Location Images", validators=[], render_kw={"multiple": True}
+    )
+
+    def __init__(self, original_name, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.original_name = original_name
+
+    name = StringField("Location Name", validators=[DataRequired()])
+    description = TextAreaField("Location description", validators=[DataRequired()])
+    submit = SubmitField("Save")
+
+    def validate_name(self, name):
+        location = db.session.scalar(
+            sa.select(PickupLocation).where(PickupLocation.name == name.data)
+        )
+        if location and location.name != self.original_name:
+            raise ValidationError("Location with this name already exists")

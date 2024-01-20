@@ -1,8 +1,5 @@
 import os
-from os import path
-from uuid import uuid4
 
-from PIL import Image as PillowImage
 from flask import (
     Blueprint,
     render_template,
@@ -12,12 +9,12 @@ from flask import (
     request,
     current_app,
 )
-from werkzeug.utils import secure_filename
 import sqlalchemy as sa
 
 from app.models import Book, Image
 from app import db
 from app.forms import AdminBookForm
+from app.helpers.image import save_file
 
 books_bp = Blueprint("books", __name__, url_prefix="books")
 
@@ -34,7 +31,7 @@ def book(book_id):
     form = AdminBookForm(book.title)
     if form.validate_on_submit():
         files = request.files.getlist("images")
-        if len(files) >= 0:
+        if len(files) > 0:
             # delete previously existing images
             images = db.session.scalars(
                 sa.select(Image).where(Image.book_id == book.id)
@@ -42,19 +39,14 @@ def book(book_id):
             for image in images:
                 try:
                     os.remove(f"{current_app.config['UPLOADS_FOLDER']}/{image.name}")
+                    db.session.delete(image)
                 except:
-                    print("cound not delete", image.path)
-            for image in db.session.scalars(
-                sa.select(Image).where(Image.book_id == book.id)
-            ):
-                db.session.delete(image)
-
+                    print("could not delete", image.path)
+            # save new files.
             for file in files:
-                file_name = (
-                    f"{str(uuid4())}{path.splitext(secure_filename(file.filename))[1]}"
-                )
-                file.save(f"{current_app.config['UPLOADS_FOLDER']}/{file_name}")
-                db.session.add(Image(name=file_name, book_id=book.id))
+                saved_file = save_file(file, Image)
+                saved_file.book_id = book.id
+                db.session.add(saved_file)
         if form.title.data != book.title:
             book.title = form.title.data
         if form.description.data != book.description:
@@ -78,34 +70,15 @@ def book(book_id):
 
 @books_bp.route("/new", methods=["GET", "POST"])
 def add_book():
-    form = AdminBookForm()
+    form = AdminBookForm("")
     book = Book()
     images = []
     if form.validate_on_submit():
         files = request.files.getlist("images")
-        if len(files) >= 0:
+        if len(files) > 0:
             for file in files:
-                file_name = (
-                    f"{str(uuid4())}{path.splitext(secure_filename(file.filename))[1]}"
-                )
-                file_save_path = f"{current_app.config['UPLOADS_FOLDER']}/{file_name}"
-                file.save(file_save_path)
-                image = PillowImage.open(file_save_path)
-                # Crop the center of the image
-                crop_size = image.width if image.width < image.height else image.height
-                left = (image.width - crop_size) // 2
-                top = (image.height - crop_size) // 2
-                right = (image.width + crop_size) // 2
-                bottom = (image.height + crop_size) // 2
-                # crop and resize
-                cropped_img = image.crop((left, top, right, bottom)).resize((390, 390))
-                webp_name = f"{path.splitext(file_save_path)[0]}.webp"
-                cropped_img.save(webp_name, optimize=True)
-                try:
-                    os.remove(file_save_path)
-                except:
-                    print("could not remove", file_save_path)
-                images.append(Image(name=path.split(webp_name)[1]))
+                saved_file = save_file(file, Image)
+                images.append(saved_file)
         book.title = form.title.data
         book.description = form.description.data
         book.original_price = form.original_price.data

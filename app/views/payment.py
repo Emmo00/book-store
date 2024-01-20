@@ -3,8 +3,8 @@ import sqlalchemy as sa
 
 from app import db
 from app.models import Order
-from app.helpers.payment import confirm_transaction, update_order
-from app.helpers.order_status import OrderStatus
+from app.helpers.payment import confirm_transaction
+from app.helpers.order_status import OrderStatus, update_order
 
 payment_bp = Blueprint("payment", __name__)
 

@@ -1,0 +1,24 @@
+{% extends 'admin/base.html' %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="/static/styles/books.css" />
+{% endblock styles %}
+
+
+{% block nav %}
+    <div class="nav-header">
+      <a href="{{ url_for('admin.index') }}">Home</a>&ThickSpace;>&ThickSpace;Locations
+    </div>
+{% endblock nav %}
+
+
+{% block content %}
+    <main class="books-body">
+      <a href="{{ url_for('admin.locations.add_location') }}"><div class="add-book">Add Location</div></a>
+      <br>
+      {% for location in locations %}
+        {% include 'admin/_location.html' %}
+      {% endfor %}
+    </main>
+{% endblock content %}

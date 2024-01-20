@@ -7,19 +7,25 @@
     <h1>10</h1>
     pending orders
     <br />
-    <a href="orders.html">view ></a>
+    <a href="{{ url_for('admin.orders.orders') }}">view ></a>
   </div>
   <div class="dash-card">
     <h1>30</h1>
     Books
     <br />
-    <a href="books.html">view ></a>
+    <a href="{{ url_for('admin.books.books') }}">view ></a>
   </div>
   <div class="dash-card">
     <h1>20</h1>
     Shopping List items
     <br />
-    <a href="shopping.html">view ></a>
+    <a href="{{ url_for('admin.shopping.shopping') }}">view ></a>
+  </div>
+  <div class="dash-card">
+    <h1>20</h1>
+    Pickup Locations
+    <br />
+    <a href="{{ url_for('admin.locations.locations') }}">view ></a>
   </div>
   <div class="dash-card">
     <h1>20</h1>

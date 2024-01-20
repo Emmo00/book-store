@@ -35,6 +35,10 @@ class Customer(BaseModel, db.Model):
 
 class PickupLocation(BaseModel, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(120))
+    description: so.Mapped[str] = so.mapped_column(sa.String(256))
+    image: so.WriteOnlyMapped["LocationImage"] = so.relationship(
+        back_populates="location"
+    )
 
 
 class Order(BaseModel, db.Model):
@@ -77,6 +81,17 @@ class Image(BaseModel, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(256))
     book_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Book.id))
     book: so.Mapped[Book] = so.relationship(back_populates="images")
+
+    @property
+    def path(self):
+        return url_for("uploads", file_name=self.name)
+
+
+class LocationImage(BaseModel, db.Model):
+    name: so.Mapped[str] = so.mapped_column(sa.String(256))
+    description: so.Mapped[str] = so.mapped_column(sa.String(256))
+    location_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(PickupLocation.id))
+    location: so.Mapped[PickupLocation] = so.relationship(back_populates="image")
 
     @property
     def path(self):

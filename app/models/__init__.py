@@ -30,15 +30,22 @@ class Customer(BaseModel, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64))
     email: so.Mapped[str] = so.mapped_column(sa.String(120))
     phone: so.Mapped[str] = so.mapped_column(sa.String(24))
-    orders: so.WriteOnlyMapped["Order"] = so.relationship(back_populates="customer")
+    orders: so.WriteOnlyMapped["Order"] = so.relationship(
+        back_populates="customer", cascade="all, delete-orphan", passive_deletes=True
+    )
 
 
 class PickupLocation(BaseModel, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(120))
     description: so.Mapped[str] = so.mapped_column(sa.String(256))
     image: so.WriteOnlyMapped["LocationImage"] = so.relationship(
-        back_populates="location"
+        back_populates="location", cascade="all, delete-orphan", passive_deletes=True
     )
+
+    @property
+    def main_image(self):
+        path = db.session.scalar(self.image.select().limit(1)).path
+        return path
 
 
 class Order(BaseModel, db.Model):
@@ -61,7 +68,9 @@ class Book(BaseModel, db.Model):
     selling_price: so.Mapped[float] = so.mapped_column(
         sa.DECIMAL(precision=12, scale=2)
     )
-    images: so.WriteOnlyMapped["Image"] = so.relationship(back_populates="book")
+    images: so.WriteOnlyMapped["Image"] = so.relationship(
+        back_populates="book", cascade="all, delete-orphan", passive_deletes=True
+    )
 
     @property
     def slug(self):
@@ -89,7 +98,6 @@ class Image(BaseModel, db.Model):
 
 class LocationImage(BaseModel, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(256))
-    description: so.Mapped[str] = so.mapped_column(sa.String(256))
     location_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(PickupLocation.id))
     location: so.Mapped[PickupLocation] = so.relationship(back_populates="image")
 

@@ -1,4 +1,8 @@
 from flask import Blueprint, render_template
+import sqlalchemy as sa
+
+from app import db
+from app.models import PickupLocation
 
 
 cart_bp = Blueprint("cart", __name__, url_prefix="/cart")
@@ -11,4 +15,5 @@ def preview():
 
 @cart_bp.route("/form", strict_slashes=False)
 def form():
-    return render_template("cart_form.html")
+    locations = db.session.scalars(sa.select(PickupLocation))
+    return render_template("cart_form.html", locations=locations)

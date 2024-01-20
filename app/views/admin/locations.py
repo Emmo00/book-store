@@ -30,7 +30,7 @@ def locations():
     )
 
 
-@location_bp.route("/<location_id>")
+@location_bp.route("/<location_id>", methods=["GET", "POST"])
 def location(location_id):
     location: PickupLocation = db.first_or_404(
         sa.select(PickupLocation).where(PickupLocation.id == location_id)
@@ -38,7 +38,7 @@ def location(location_id):
     form = AdminLocationForm(location.name)
     if form.validate_on_submit():
         files = request.files.getlist("images")
-        if len(files) > 0:
+        if len(files) > 0 and files[0].filename != "":
             images = db.session.scalars(
                 sa.select(LocationImage).where(LocationImage.location_id == location.id)
             )
@@ -76,7 +76,7 @@ def add_location():
     images = []
     if form.validate_on_submit():
         files = request.files.getlist("images")
-        if len(files) >= 0:
+        if len(files) >= 0 and files[0].filename != "":
             for file in files:
                 saved_file = save_file(file, LocationImage)
                 images.append(saved_file)

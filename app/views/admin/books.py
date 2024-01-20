@@ -31,7 +31,7 @@ def book(book_id):
     form = AdminBookForm(book.title)
     if form.validate_on_submit():
         files = request.files.getlist("images")
-        if len(files) > 0:
+        if len(files) > 0 and files[0].filename != "":
             # delete previously existing images
             images = db.session.scalars(
                 sa.select(Image).where(Image.book_id == book.id)
@@ -75,7 +75,7 @@ def add_book():
     images = []
     if form.validate_on_submit():
         files = request.files.getlist("images")
-        if len(files) > 0:
+        if len(files) > 0 and files[0].filename != "":
             for file in files:
                 saved_file = save_file(file, Image)
                 images.append(saved_file)

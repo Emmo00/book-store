@@ -35,10 +35,10 @@
           <div class="cart-form-item">
             <label for="location">Pickup Location</label>
             <select name="location" id="location" required>
-              <option value="default">Location</option>
-              <option value="Jimbazz">Jimbazz</option>
-              <option value="Jimbazz">Jimbazz</option>
-              <option value="Jimbazz">Jimbazz</option>
+              <option value="default">Select Location</option>
+              {% for location in locations %}
+                <option value="{{ location.id }}">{{ location.name }}</option>
+              {% endfor %}
             </select>
           </div>
         </form>

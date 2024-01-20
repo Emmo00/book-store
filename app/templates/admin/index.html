@@ -4,43 +4,42 @@
 {% block content %}
 <div class="dash-cards">
   <div class="dash-card">
-    <h1>10</h1>
+    <h1>{{ stats.pending_orders }}</h1>
     pending orders
     <br />
     <a href="{{ url_for('admin.orders.orders') }}">view ></a>
   </div>
   <div class="dash-card">
-    <h1>30</h1>
+    <h1>{{ stats.books }}</h1>
     Books
     <br />
     <a href="{{ url_for('admin.books.books') }}">view ></a>
   </div>
   <div class="dash-card">
-    <h1>20</h1>
+    <h1>{{ stats.shopping_list_count }}</h1>
     Shopping List items
     <br />
     <a href="{{ url_for('admin.shopping.shopping') }}">view ></a>
   </div>
   <div class="dash-card">
-    <h1>20</h1>
+    <h1>{{ stats.locations }}</h1>
     Pickup Locations
     <br />
     <a href="{{ url_for('admin.locations.locations') }}">view ></a>
   </div>
   <div class="dash-card">
-    <h1>20</h1>
+    <h1>{{ stats.new_customers }}</h1>
     New Customers This month
     <br />
-    3% up
+    {{ stats.new_customers_percent }}%
   </div>
   <div class="dash-card">
-    <h1>N100,000</h1>
+    <h1>N{{ stats.revenue }}</h1>
     Revenue This month
     <br />
     <br />
-    <p>40% up</p>
+    <p>{{ stats.revenue_percent }}%</p>
     <br />
-    <a href="shopping.html">view ></a>
   </div>
 </div>
 {% endblock content %}

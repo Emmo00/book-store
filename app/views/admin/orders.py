@@ -82,7 +82,7 @@ def order(order_id):
             "link": url_for("admin.orders.in_pickup_location", order_id=order_id),
         },
         OrderStatus.in_pickup_location: {
-            "text": "Delivered",
+            "text": "Delivered?",
             "link": url_for("admin.orders.delivered", order_id=order_id),
         },
         OrderStatus.delivered: {

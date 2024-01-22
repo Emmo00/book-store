@@ -12,7 +12,7 @@ from .locations import location_bp
 
 from app import db
 from app.helpers.order_status import OrderStatus
-from app.models import Order, Book, BookOrder, PickupLocation, Customer
+from app.models import Order, Book, BookOrder, PickupLocation, Customer, Shopping
 
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -28,7 +28,7 @@ def index():
         .select_from(Order)
         .where(
             Order.status == OrderStatus.pending
-            and Order.status == OrderStatus.on_the_way
+            or Order.status == OrderStatus.on_the_way
         )
     )
     stats["pending_orders"] = db.session.scalar(query)
@@ -36,6 +36,7 @@ def index():
     query = sa.select(sa.func.count()).select_from(Book)
     stats["books"] = db.session.scalar(query)
 
+    query = sa.select(sa.func.count()).select_from(Shopping)
     stats["shopping_list_count"] = db.session.scalar(query)
 
     query = sa.select(sa.func.count()).select_from(PickupLocation)

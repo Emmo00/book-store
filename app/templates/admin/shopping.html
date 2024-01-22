@@ -23,20 +23,15 @@
             <th><h3>Price</h3></th>
             <th>?</th>
           </tr>
+          {% for item in shopping %}
           <tr>
-            <td>Book Title</td>
-            <td>1</td>
-            <td>10, 100</td>
-            <td>10, 100</td>
-            <td><button>acquired</button></td>
+            <td>{{ item.book.title }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.book.original_price }}</td>
+            <td>{{ item.book.original_price * item.quantity }}</td>
+            <td><input type="radio"></td>
           </tr>
-          <tr>
-            <td>Book Title</td>
-            <td>1</td>
-            <td>10, 100</td>
-            <td>10, 100</td>
-            <td><button>acquired</button></td>
-          </tr>
+          {% endfor %}
         </table>
       </div>
     </main>

@@ -39,7 +39,6 @@ def create_order():
     order = Order(
         id=order_id, customer_id=customer_id, pickup_location_id=payload.get("location")
     )
-    db.session.add(order)
     # CREATE BOOKORDERS
     book_orders = []
     total = 0
@@ -53,6 +52,8 @@ def create_order():
             )
             book_orders.append(book_order)
             total += book.selling_price * int(payload.get("books").get(book_id))
+    order.total = total
+    db.session.add(order)
     db.session.add_all(book_orders)
     db.session.commit()
     # CREATE FLUTTERWAVE PAYMENT

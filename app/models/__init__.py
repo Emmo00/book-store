@@ -41,6 +41,9 @@ class PickupLocation(BaseModel, db.Model):
     image: so.WriteOnlyMapped["LocationImage"] = so.relationship(
         back_populates="location", cascade="all, delete-orphan", passive_deletes=True
     )
+    orders: so.WriteOnlyMapped["Order"] = so.relationship(
+        back_populates="location", cascade="all, delete-orphan", passive_deletes=True
+    )
 
     @property
     def main_image(self):
@@ -50,6 +53,7 @@ class PickupLocation(BaseModel, db.Model):
 
 class Order(BaseModel, db.Model):
     customer_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Customer.id))
+    total: so.Mapped[float] = so.mapped_column(sa.DECIMAL(precision=12, scale=2))
     pickup_location_id: so.Mapped[str] = so.mapped_column(
         sa.ForeignKey(PickupLocation.id)
     )
@@ -57,6 +61,19 @@ class Order(BaseModel, db.Model):
         sa.Enum(OrderStatus), default=OrderStatus.pending
     )
     customer: so.Mapped[Customer] = so.relationship(back_populates="orders")
+    location: so.Mapped[PickupLocation] = so.relationship(back_populates="orders")
+
+    @property
+    def num_books(self):
+        query = sa.select(BookOrder).where(BookOrder.order_id == self.id)
+        return db.session.scalar(sa.func.sum(query.c.quantity))
+
+    @property
+    def books(self):
+        books = db.session.scalars(
+            sa.select(BookOrder).where(BookOrder.order_id == self.id)
+        )
+        return books
 
 
 class Book(BaseModel, db.Model):
@@ -71,6 +88,7 @@ class Book(BaseModel, db.Model):
     images: so.WriteOnlyMapped["Image"] = so.relationship(
         back_populates="book", cascade="all, delete-orphan", passive_deletes=True
     )
+    book_order: so.WriteOnlyMapped["BookOrder"] = so.relationship(back_populates="book")
 
     @property
     def slug(self):
@@ -111,3 +129,4 @@ class BookOrder(BaseModel, db.Model):
     order_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Order.id))
     quantity: so.Mapped[int] = so.mapped_column(default=1)
     acquired: so.Mapped[bool] = so.mapped_column(default=False)
+    book: so.Mapped[Book] = so.relationship(back_populates="book_order")

@@ -28,7 +28,7 @@ def index():
         .select_from(Order)
         .where(
             Order.status == OrderStatus.pending
-            or Order.status == OrderStatus.on_the_way
+            and Order.status == OrderStatus.on_the_way
         )
     )
     stats["pending_orders"] = db.session.scalar(query)

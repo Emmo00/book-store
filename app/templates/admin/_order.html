@@ -1,0 +1,13 @@
+<section class="order-list-item">
+  <article>
+    <div class="order-details">
+      <h3>{{ order.customer.name }}</h3>
+      <h3>{{ order.created_at.strftime('%B %d, %Y') }}</h3>
+      <div style="padding: 5px 0;display: flex;justify-content: center;align-items: center;gap: 5px;">
+        <p>No of Books: {{ order.num_books }}</p>
+        <p class="order-status order-status-{{ order.status.name }}">{{ order.status.name }}</p>
+      </div>
+    </div>
+    <div class="order-status"><a href="{{ url_for('admin.orders.order', order_id = order.id) }}" style="color: white;">View ></a></div>
+  </article>
+</section>

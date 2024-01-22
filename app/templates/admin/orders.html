@@ -1,30 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart preview</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
+{% extends 'admin/base.html' %}
+
+
+{% block styles %}
     <link rel="stylesheet" href="/static/styles/orders.css" />
-  </head>
-  <body>
+{% endblock styles %}
+
+
+{% block nav %}
     <div class="nav-header">
-      <a href="/admin">Home</a> &ThickSpace;>&ThickSpace;Orders
+      <a href="{{ url_for('admin.index') }}">Home</a> &ThickSpace;>&ThickSpace;Orders
     </div>
-    <br />
+{% endblock nav %}
+
+
+{% block content %}
     <main class="orders-body">
-      <a href="order_preview.html">
-        <section class="order-list-item">
-          <article>
-            <div class="order-details">
-              <h3>Nwafor Emmanuel</h3>
-              <h3>12-03-1920</h3>
-              <p>No of Books: 2</p>
-            </div>
-            <div class="order-status">View ></div>
-          </article>
-        </section>
-      </a>
+      <div class="order-list">
+        {% for order in orders %}
+          {% include 'admin/_order.html' %}
+        {% endfor %}
+      </div>
+      {% if other_orders %}
+        <br>
+        <center><h3>Other Orders</h3></center>
+        <br>
+        <hr>
+        <br>
+        <div class="order-list">
+          {% for order in other_orders %}
+            {% include 'admin/_order.html' %}
+          {% endfor %}
+        </div>
+      {% endif %}
     </main>
-  </body>
-</html>
+{% endblock content %}

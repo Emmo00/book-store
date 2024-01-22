@@ -1,4 +1,6 @@
 :root {
+  --order-cancelled: red;
+  --order-pending: rgb(177, 64, 64);
   --order-sent: grey;
   --order-on-way: lightgreen;
   --order-pickup: green;
@@ -50,15 +52,23 @@ tr:nth-child(even) {
   text-align: center;
 }
 
+.order-status-cancelled {
+  background-color: var(--order-cancelled);
+}
+
+.order-status-pending {
+  background-color: var(--order-pending);
+}
+
 .order-status-sent {
   background-color: var(--order-sent);
 }
 
-.order-status-on-way {
+.order-status-on_the_way {
   background-color: var(--order-on-way);
 }
 
-.order-status-pickup {
+.order-status-in_pickup_location {
   background-color: var(--order-pickup);
 }
 

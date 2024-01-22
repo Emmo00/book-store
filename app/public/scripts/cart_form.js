@@ -42,7 +42,8 @@ document.querySelector('.cart-continue').addEventListener('click', async () => {
 });
 
 function validPhone(phone) {
-  return true;
+  const phonePattern = /^\+[0-9]{13}$/;
+  return phonePattern.test(phone);
 }
 
 function validEmail(email) {

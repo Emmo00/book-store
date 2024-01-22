@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, url_for, abort
+from flask import Blueprint, request, render_template, url_for, abort, redirect
 import sqlalchemy as sa
 
 from app import db
@@ -19,6 +19,6 @@ def payment_complete():
         order = db.session.scalar(sa.select(Order).where(Order.id == order_id))
         if not order:
             abort(404)
-        return render_template(url_for("client.orders.order", order_id=order_id))
+        return redirect(url_for("client.orders.order", order_id=order_id))
     update_order(order_id, status=OrderStatus.cancelled)
-    return render_template(url_for("client.orders.order", order_id=order_id))
+    return redirect(url_for("client.orders.order", order_id=order_id))

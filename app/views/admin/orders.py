@@ -11,14 +11,18 @@ orders_bp = Blueprint("orders", __name__, url_prefix="/orders")
 @orders_bp.route("/")
 def orders():
     orders = db.session.scalars(
-        sa.select(Order).where(
+        sa.select(Order)
+        .where(
             Order.status == OrderStatus.sent and Order.status == OrderStatus.on_the_way
         )
+        .order_by(Order.updated_at.desc())
     )
     other_orders = db.session.scalars(
-        sa.select(Order).where(
+        sa.select(Order)
+        .where(
             Order.status != OrderStatus.sent or Order.status != OrderStatus.on_the_way
         )
+        .order_by(Order.updated_at.desc())
     )
     locations = db.session.scalars(sa.select(PickupLocation))
     return render_template(
@@ -42,6 +46,7 @@ def orders_in_location(location_id):
         .where(
             Order.status == OrderStatus.sent and Order.status == OrderStatus.on_the_way
         )
+        .order_by(Order.updated_at.desc())
     )
     other_orders = db.session.scalars(
         sa.select(Order)
@@ -49,6 +54,7 @@ def orders_in_location(location_id):
         .where(
             Order.status != OrderStatus.sent or Order.status != OrderStatus.on_the_way
         )
+        .order_by(Order.updated_at.desc())
     )
     locations = db.session.scalars(sa.select(PickupLocation))
     return render_template(

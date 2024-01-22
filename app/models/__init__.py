@@ -130,3 +130,10 @@ class BookOrder(BaseModel, db.Model):
     quantity: so.Mapped[int] = so.mapped_column(default=1)
     acquired: so.Mapped[bool] = so.mapped_column(default=False)
     book: so.Mapped[Book] = so.relationship(back_populates="book_order")
+
+
+class Shopping(BaseModel, db.Model):
+    book_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(Book.id), unique=True)
+    quantity: so.Mapped[int] = so.mapped_column(default=1)
+
+    book: so.Mapped[Book] = so.relationship(backref="shopping")

@@ -62,6 +62,9 @@ class Order(BaseModel, db.Model):
     )
     customer: so.Mapped[Customer] = so.relationship(back_populates="orders")
     location: so.Mapped[PickupLocation] = so.relationship(back_populates="orders")
+    book_orders: so.WriteOnlyMapped["BookOrder"] = so.relationship(
+        back_populates="order", cascade="all, delete-orphan", passive_deletes=True
+    )
 
     @property
     def num_books(self):
@@ -130,6 +133,7 @@ class BookOrder(BaseModel, db.Model):
     quantity: so.Mapped[int] = so.mapped_column(default=1)
     acquired: so.Mapped[bool] = so.mapped_column(default=False)
     book: so.Mapped[Book] = so.relationship(back_populates="book_order")
+    order: so.Mapped[Order] = so.relationship(back_populates="book_orders")
 
 
 class Shopping(BaseModel, db.Model):
@@ -137,3 +141,36 @@ class Shopping(BaseModel, db.Model):
     quantity: so.Mapped[int] = so.mapped_column(default=1)
 
     book: so.Mapped[Book] = so.relationship(backref="shopping")
+
+    @staticmethod
+    def add_book(book_id, quantity):
+        if quantity == 0:
+            return
+        book = db.session.scalar(sa.select(Shopping).where(Shopping.book_id == book_id))
+        if book and book.book.book_order.order.status == OrderStatus.sent:
+            book.quantity += quantity
+        else:
+            book = Shopping(book_id=book_id, quantity=quantity)
+        db.session.add(book)
+        db.session.commit()
+
+    @staticmethod
+    def remove_book(book_id, quantity=None):
+        book = db.session.scalar(sa.select(Shopping).where(Shopping.book_id == book_id))
+        if book:
+            if quantity:
+                book.quantity -= quantity
+                db.session.add(book)
+            else:
+                db.session.delete(book)
+            db.session.commit()
+
+    @staticmethod
+    def add_order(order):
+        for book in order.books:
+            Shopping.add_book(book.book_id, book.quantity)
+
+    @staticmethod
+    def remove_order(order):
+        for book in order.books:
+            Shopping.remove_book(book.book_id)

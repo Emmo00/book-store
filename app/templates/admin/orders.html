@@ -15,6 +15,11 @@
 
 {% block content %}
     <main class="orders-body">
+      <div class="order-locations">
+        {% for location in locations %}
+          <div class="order-status order-location {% if location_id == location.id %}active-location{% endif %}"><a style="color: {% if location_id == location.id %}black{% else %} white{% endif %};" href="{{ url_for('admin.orders.orders_in_location', location_id=location.id) }}">{{ location.name }}</a></div>
+        {% endfor %}
+      </div>
       <div class="order-list">
         {% for order in orders %}
           {% include 'admin/_order.html' %}

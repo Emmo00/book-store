@@ -23,7 +23,9 @@
       <br />
       <br />
       <div class="order-status">
-        <button class="order-status">Add to Shopping</button>
+        <button class="order-status">
+          <a class="order-status" href="{{ action[order.status].link }}">{{ action[order.status].text }}</a>
+        </button>
       </div>
       <br />
       <br />

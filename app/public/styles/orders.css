@@ -47,9 +47,10 @@ tr:nth-child(even) {
 .order-status {
   background-color: black;
   color: white;
-  padding: 5px 10px;
+  padding: 9px 10px;
   border-radius: 20px;
   text-align: center;
+  min-width: 90px;
 }
 
 .order-status-cancelled {
@@ -89,4 +90,27 @@ tr:nth-child(even) {
 
 .order-info {
   line-height: 40px;
+}
+
+.order-locations {
+  overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  margin: 0 3px;
+  gap: 5px;
+}
+
+.order-location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  display: inline;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.active-location {
+  background-color: blanchedalmond;
+  color: black !important;
 }

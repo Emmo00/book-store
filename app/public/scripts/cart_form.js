@@ -17,6 +17,11 @@ document.querySelector('.cart-continue').addEventListener('click', async () => {
     showAlert('Invalid Email address');
     return;
   }
+
+  cartContinueButton.disabled = true;
+  cartContinueButton.innerHTML = '';
+  cartContinueButton.classList.add('loader');
+
   const payload = {
     name: fname,
     phone,

@@ -17,7 +17,7 @@ def orders():
 
 @orders_bp.route("/<order_id>", strict_slashes=False)
 def order(order_id):
-    order = db.session.scalar(sa.select(Order).where(Order.id == order_id))
+    order = db.first_or_404(sa.select(Order).where(Order.id == order_id))
     return render_template(
         "order_preview.html",
         title=f"Order on {order.created_at.strftime('%d-%m-%Y')}",

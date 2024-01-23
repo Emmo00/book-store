@@ -15,26 +15,26 @@
 
 {% block content %}
     <main class="orders-body">
-      {% if  not orders %}
+      {% for order in orders %}
+      <a href="{{ url_for('client.orders.order', order_id=order.id) }}">
+        <section class="order-list-item">
+          <article>
+            <div class="order-details">
+              <h3>{{ order.created_at.strftime('%d-%m-%Y') }}</h3>
+              <p>No of Books: {{ order.num_books }}</p>
+            </div>
+            <div class="order-status order-status-{{ order.status.name }}">{{ order.status.name }}</div>
+          </article>
+        </section>
+      </a>
+      
+      {% else %}
       <br>
       <br>
       <center>
         <h1>No Orders yet.</h1>
       </center>
-      {% else %}
-        {% for order in orders %}
-          <a href="{{ url_for('client.orders.order', order_id=order.id) }}">
-            <section class="order-list-item">
-              <article>
-                <div class="order-details">
-                  <h3>{{ order.created_at.strftime('%d-%m-%Y') }}</h3>
-                  <p>No of Books: {{ order.num_books }}</p>
-                </div>
-                <div class="order-status order-status-{{ order.status.name }}">{{ order.status.name }}</div>
-              </article>
-            </section>
-          </a>
-        {% endfor %}
-      {% endif %}
+      {% endfor %}
+
     </main>
 {% endblock content %}

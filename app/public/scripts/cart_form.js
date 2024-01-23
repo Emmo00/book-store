@@ -38,6 +38,7 @@ document.querySelector('.cart-continue').addEventListener('click', async () => {
     return;
   }
   const data = (await response.json()).data;
+  orders.clearOrders();
   document.location = data.link;
 });
 

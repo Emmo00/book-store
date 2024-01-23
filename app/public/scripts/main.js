@@ -24,6 +24,11 @@ class Orders {
     this.save();
     return 0;
   }
+  clearOrders() {
+    this.load();
+    this.orders = {};
+    this.save();
+  }
   increaseBookOrder(bookId) {
     this.load();
     if (!this.orders[bookId]) this.orders[bookId] = 0;

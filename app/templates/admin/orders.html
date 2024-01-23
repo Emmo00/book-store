@@ -25,17 +25,15 @@
           {% include 'admin/_order.html' %}
         {% endfor %}
       </div>
-      {% if other_orders %}
-        <br>
-        <center><h3>Other Orders</h3></center>
-        <br>
-        <hr>
-        <br>
-        <div class="order-list">
-          {% for order in other_orders %}
-            {% include 'admin/_order.html' %}
-          {% endfor %}
-        </div>
-      {% endif %}
+      <br>
+      <center><h3>Other Orders</h3></center>
+      <br>
+      <hr>
+      <br>
+      <div class="order-list">
+        {% for order in other_orders %}
+          {% include 'admin/_order.html' %}
+        {% endfor %}
+      </div>
     </main>
 {% endblock content %}

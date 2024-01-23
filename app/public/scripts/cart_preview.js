@@ -1,13 +1,21 @@
+const cartContinueButton = document.querySelector('.cart-continue');
+
 async function getBookInfoFromServer(bookId) {
   const response = await fetch(`/api/books/${bookId}`);
   return (await response.json()).data;
 }
 
 async function getCartBooksInfo() {
-  const books = [];
+  let books = [];
   for (const [bookId, quantity] of Object.entries(orders.orders)) {
-    books.push({ ...(await getBookInfoFromServer(bookId)), quantity });
+    const book = await getBookInfoFromServer(bookId);
+    if (!book.price) {
+      orders.removeOrder(bookId);
+      continue;
+    }
+    books.push({ ...book, quantity });
   }
+  console.log(books);
   return books;
 }
 
@@ -54,7 +62,15 @@ async function updateCartTotal() {
   const books = await getCartBooksInfo();
   const total = books.reduce((a, b) => +a + +b.price * b.quantity, 0);
   document.querySelector('.cart-total').innerHTML = total + '.00';
+  return total;
 }
 
-populateCartItems();
-updateCartTotal();
+async function main() {
+  populateCartItems();
+  if ((await updateCartTotal()) === 0) {
+    showAlert('Cart is Empty');
+    cartContinueButton.remove();
+  }
+}
+
+main();

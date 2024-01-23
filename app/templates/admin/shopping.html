@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart preview</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
+{% extends 'admin/base.html' %}
+
+
+{% block styles %}
     <link rel="stylesheet" href="/static/styles/shopping.css" />
-  </head>
-  <body>
+{% endblock styles %}
+
+
+{% block nav %}
     <div class="nav-header">
-      <a href="/admin">Home</a> &ThickSpace;>&ThickSpace;Shopping
+      <a href="{{ url_for('admin.index') }}">Home</a> &ThickSpace;>&ThickSpace;Shopping
     </div>
+{% endblock nav %}
+
+
+{% block content %}
     <br />
     <main class="books-body">
-      <a href="withdraw.html"><div class="withdraw-btn">Withdraw</div></a>
+      <a href="{{ url_for('admin.withdraw.withdraw') }}"><div class="withdraw-btn">Withdraw</div></a>
       <div>
         <table>
           <tr>
@@ -35,5 +38,4 @@
         </table>
       </div>
     </main>
-  </body>
-</html>
+{% endblock content %}

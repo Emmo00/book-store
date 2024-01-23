@@ -8,7 +8,7 @@ from wtforms import (
     SubmitField,
     MultipleFileField,
 )
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms.validators import DataRequired, Email, ValidationError, Length
 import sqlalchemy as sa
 
 from app.models import Book, PickupLocation
@@ -75,3 +75,9 @@ class AdminLocationForm(FlaskForm):
         )
         if location and location.name != self.original_name:
             raise ValidationError("Location with this name already exists")
+
+
+class AdminWithdrawForm(FlaskForm):
+    amount = StringField("Amount", validators=[DataRequired()])
+    pin = PasswordField("Pin", validators=[Length(6)])
+    submit = SubmitField("Withdraw")

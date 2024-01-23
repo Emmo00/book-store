@@ -1,34 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart preview</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
+{% extends 'admin/base.html' %}
+
+
+{% block styles %}
     <link rel="stylesheet" href="/static/styles/shopping.css" />
-  </head>
-  <body>
+{% endblock styles %}
+
+
+{% block nav %}
     <div class="nav-header">
-      <a href="/admin">Home</a> &ThickSpace;>&ThickSpace;<a href="shopping.html"
+      <a href="{{ url_for('admin.index') }}">Home</a> &ThickSpace;>&ThickSpace;<a href="{{ url_for('admin.shopping.shopping') }}"
         >Shopping</a
       >&ThickSpace;>&ThickSpace;Withdraw
     </div>
+{% endblock nav %}
+
+{% block content %}
     <br />
     <main>
       <div class="withdraw-form">
         <form action="" method="post">
-          <label for="amount">Amount</label>
+          {{ form.hidden_tag() }}
+          {{ form.amount.label }}
           <br />
-          <input type="text" name="amount" id="amount" />
+          {{ form.amount() }}
           <br />
-          <label for="pin">Pin</label>
+          {% for error in form.amount.errors %}
+            <br>
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
+          {{ form.pin.label }}
           <br />
-          <input type="password" name="pin" id="pin" />
+          {{ form.pin() }}
           <br />
+          {% for error in form.pin.errors %}
+            <br>
+            <span style="color: red;">{{ error }}</span>
+          {% endfor %}
           <br />
-          <input type="submit" value="Withdraw" class="withdraw-btn" />
+          {{ form.submit() }}
         </form>
       </div>
     </main>
-  </body>
-</html>
+{% endblock content %}

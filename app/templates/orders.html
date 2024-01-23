@@ -1,40 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart preview</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
+{% extends 'base.html' %}
+
+
+{% block styles %}
     <link rel="stylesheet" href="/static/styles/orders.css" />
-  </head>
-  <body>
-    <div class="nav-header">
-      <a href="/">Home</a> &ThickSpace;>&ThickSpace;Orders
-    </div>
-    <br />
+{% endblock styles %}
+
+
+{% block nav %}
+  <div class="nav-header">
+      <a href="{{ url_for('client.index') }}">Home</a> &ThickSpace;>&ThickSpace;Orders
+  </div>
+{% endblock nav %}
+
+
+{% block content %}
     <main class="orders-body">
-      <a href="order_preview.html">
-        <section class="order-list-item">
-          <article>
-            <div class="order-details">
-              <h3>12-03-1920</h3>
-              <p>No of Books: 2</p>
-            </div>
-            <div class="order-status order-status-on-way">On the Way</div>
-          </article>
-        </section>
-      </a>
-      <a href="order_preview.html">
-        <section class="order-list-item">
-          <article>
-            <div class="order-details">
-              <h3>12-03-1920</h3>
-              <p>No of Books: 2</p>
-            </div>
-            <div class="order-status order-status-delivered">Delivered</div>
-          </article>
-        </section>
-      </a>
+      {% if  not orders %}
+      <br>
+      <br>
+      <center>
+        <h1>No Orders yet.</h1>
+      </center>
+      {% else %}
+        {% for order in orders %}
+          <a href="{{ url_for('client.orders.order', order_id=order.id) }}">
+            <section class="order-list-item">
+              <article>
+                <div class="order-details">
+                  <h3>{{ order.created_at.strftime('%d-%m-%Y') }}</h3>
+                  <p>No of Books: {{ order.num_books }}</p>
+                </div>
+                <div class="order-status order-status-{{ order.status.name }}">{{ order.status.name }}</div>
+              </article>
+            </section>
+          </a>
+        {% endfor %}
+      {% endif %}
     </main>
-  </body>
-</html>
+{% endblock content %}

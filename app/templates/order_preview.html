@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart preview</title>
-    <link rel="stylesheet" href="/static/styles/main.css" />
+{% extends 'base.html' %}
+
+
+{% block styles %}
     <link rel="stylesheet" href="/static/styles/orders.css" />
-  </head>
-  <body>
-    <div class="nav-header">
-      <a href="/">Home</a> &ThickSpace;>&ThickSpace;<a href="orders.html"
+{% endblock styles %}
+
+
+{% block nav %}
+  <div class="nav-header">
+      <a href="{{ url_for('client.index') }}">Home</a> &ThickSpace;>&ThickSpace;<a href="{{ url_for('client.orders.orders') }}"
         >Orders</a
-      >&ThickSpace;>&ThickSpace;12-03-1920
+      >&ThickSpace;>&ThickSpace;{{ order.created_at.strftime('%d-%m-%Y') }}
     </div>
-    <br />
-    <main class="order-body">
+{% endblock nav %}
+
+
+{% block content %}
+<main class="order-body">
+  <br>
+  <br>
       <div>
-        <h2 class="order-price">N20, 100</h2>
-        <h3 class="order-status order-status-on-way">On The Way</h3>
+        <h2 class="order-price">N{{ order.total }}</h2>
+        <h3 class="order-status order-status-{{ order.status.name }}">{{ order.status.name }}</h3>
       </div>
       <br />
       <br />
@@ -28,19 +32,20 @@
             <th><h3>Quantity</h3></th>
             <th><h3>Price</h3></th>
           </tr>
+          {% for book in order.books %}
           <tr>
-            <td>Book Title</td>
-            <td>1</td>
-            <td>10, 100</td>
+            <td>{{ book.book.title }}</td>
+            <td>{{ book.quantity }}</td>
+            <td>{{ book.book.selling_price * book.quantity }}</td>
           </tr>
+          {% endfor %}
         </table>
         <br />
         <div class="order-info">
-          <p><b>Name: </b> Nwafor Emma</p>
-          <p><b>Phone: </b><a href="tel:+2341234567890">+2341234567890</a></p>
-          <p><b>Location</b>: Jimbazz</p>
+          <p><b>Name: </b>{{ order.customer.name }}</p>
+          <p><b>Phone: </b><a href="tel:{{ order.customer.phone }}">{{ order.customer.phone }}</a></p>
+          <p><b>Location</b>: {{ order.location.name }}</p>
         </div>
       </div>
-    </main>
-  </body>
-</html>
+</main>
+{% endblock content %}

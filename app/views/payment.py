@@ -9,7 +9,7 @@ from app.helpers.order_status import OrderStatus, update_order
 payment_bp = Blueprint("payment", __name__)
 
 
-@payment_bp.route("/payment-complete")
+@payment_bp.route("/payment-complete", strict_slashes=False)
 def payment_complete():
     status = request.args.to_dict().get("status")
     order_id = request.args.to_dict().get("tx_ref")

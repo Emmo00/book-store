@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="/static/styles/books.css" />
+{% endblock styles %}
+
+
+{% block nav %}
+    <div class="nav-header">
+      <a href="{{ url_for('client.index') }}">Home</a>&ThickSpace;>&ThickSpace;Locations
+    </div>
+{% endblock nav %}
+
+
+{% block content %}
+    <main class="books-body">
+      <br>
+      {% for location in locations %}
+        <a href="{{ url_for('client.locations.location', location_id=location.id)}}">
+            <section class="book-list-item">
+            <article>
+                <div class="book-image">
+                <img src="{{ location.main_image }}" alt="{{ location.name }}" />
+                </div>
+                <div class="book-details">
+                <h3>{{ location.name}}</h3>
+                <p>{{ location.description }}</p>
+                </div>
+            </article>
+            </section>
+        </a>
+      {% endfor %}
+    </main>
+{% endblock content %}

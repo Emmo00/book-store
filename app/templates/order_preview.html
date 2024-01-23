@@ -44,7 +44,7 @@
         <div class="order-info">
           <p><b>Name: </b>{{ order.customer.name }}</p>
           <p><b>Phone: </b><a href="tel:{{ order.customer.phone }}">{{ order.customer.phone }}</a></p>
-          <p><b>Location</b>: {{ order.location.name }}</p>
+          <p><b>Location</b>: <a href="{{ url_for('client.locations.location', location_id=order.location.id) }}">{{ order.location.name }}</a></p>
         </div>
       </div>
 </main>

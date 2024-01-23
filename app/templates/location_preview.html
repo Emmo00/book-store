@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="/static/styles/book_preview.css" />
+{% endblock styles %}
+
+
+{% block nav %}
+    <div class="nav-header">
+      <a href="{{ url_for('client.index') }}">Home</a>&ThickSpace;>&ThickSpace;<a href="{{ url_for('client.locations.locations') }}">Locations</a>
+      &ThickSpace;>&ThickSpace;{{ location.name }}
+    </div>
+{% endblock nav %}
+
+
+{% block content %}
+<section class="book-preview-container">
+  <h1>{{ location.name }}</h1>
+  <img src={{ location.main_image }} alt="Book title" class="big-image br-5" />
+  <p class="book-description">
+    {{ location.description }}
+  </p>
+  <br />
+  <br />
+</section>
+{% endblock content %}
+

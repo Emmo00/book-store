@@ -7,6 +7,7 @@ from .books import books_bp
 from .cart import cart_bp
 from .order import orders_bp
 from .payment import payment_bp
+from .location import location_bp
 from app.models import Book
 from app import db
 
@@ -33,6 +34,7 @@ client_bp.register_blueprint(books_bp)
 client_bp.register_blueprint(cart_bp)
 client_bp.register_blueprint(orders_bp)
 client_bp.register_blueprint(payment_bp)
+client_bp.register_blueprint(location_bp)
 
 
 @client_bp.before_request

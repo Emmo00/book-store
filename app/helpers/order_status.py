@@ -20,6 +20,8 @@ def update_order(order_id, status=OrderStatus.sent):
     order = db.session.scalar(sa.select(Order).where(Order.id == order_id))
     if not order:
         return
+    if status == OrderStatus.sent and order.status != OrderStatus.pending:
+        return
     order.status = status
     db.session.add(order)
     db.session.commit()

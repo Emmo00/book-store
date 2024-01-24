@@ -7,7 +7,7 @@ from app.models import Book
 books_bp = Blueprint("books", __name__, url_prefix="/books")
 
 
-@books_bp.route("/<bookId>")
+@books_bp.route("/<bookId>", strict_slashes=False)
 def book(bookId):
     book = db.session.scalar(sa.select(Book).where(Book.id == bookId))
     if not book:

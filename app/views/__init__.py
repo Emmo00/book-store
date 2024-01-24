@@ -50,6 +50,8 @@ def before_request():
     if not session.get("user_id"):
         print("no session")
         session["user_id"] = str(uuid4())
+    customer_id = session.get("user_id")
+    print(customer_id)
 
 
 @client_bp.errorhandler(404)
@@ -58,5 +60,5 @@ def not_found(e):
 
 
 @client_bp.errorhandler(500)
-def not_found(e):
+def internal_error(e):
     return render_template("error.html", code=500)

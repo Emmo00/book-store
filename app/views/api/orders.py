@@ -10,7 +10,7 @@ from app.helpers.payment import create_payment
 orders_bp = Blueprint("orders", __name__, url_prefix="/orders")
 
 
-@orders_bp.route("/", methods=["POST"])
+@orders_bp.route("/", methods=["POST"], strict_slashes=False)
 def create_order():
     # GET REQUEST PAYLOAD
     payload = request.json
@@ -22,9 +22,10 @@ def create_order():
         or not payload.get("location")
         or payload.get("location") == "default"
     ):
+        print("incomplete info")
         return jsonify({"message": "Incomplete information"}), 400
     # CREATE CUSTOMER
-    customer_id = session.get("user_id") or str(uuid4())
+    customer_id = session.get("user_id")
     customer = db.session.scalar(sa.select(Customer).where(Customer.id == customer_id))
     if not customer:
         customer = Customer(
@@ -62,6 +63,5 @@ def create_order():
     )
     # RETURN FLUTTERWAVE PAYMENT URL
     if payment:
-        session["user_id"] = customer_id
         return jsonify(payment)
     return jsonify({"message": "Error creating payment"}), 500

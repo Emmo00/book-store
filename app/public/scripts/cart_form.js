@@ -32,7 +32,8 @@ document.querySelector('.cart-continue').addEventListener('click', async () => {
   console.log(payload);
   const response = await fetch('/api/orders', {
     method: 'POST',
-    credentials: 'same-origin',
+    credentials: 'include',
+    redirect: 'follow',
     headers: {
       'Content-Type': 'application/json',
     },

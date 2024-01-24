@@ -1,7 +1,7 @@
 const cartContinueButton = document.querySelector('.cart-continue');
 
 async function getBookInfoFromServer(bookId) {
-  const response = await fetch(`/api/books/${bookId}`);
+  const response = await fetch(`/api/books/${bookId}`, { redirect: 'follow' });
   return (await response.json()).data;
 }
 

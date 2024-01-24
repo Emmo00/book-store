@@ -7,7 +7,11 @@ def create_payment(
     txn_ref, amount, customer_id, customer_name, customer_email, customer_phone
 ):
     url = "https://api.flutterwave.com/v3/payments"
-    headers = {"Authorization": f"Bearer {current_app.config['FLW_SECRET_KEY']}"}
+    headers = {
+        "Authorization": f"Bearer {current_app.config['FLW_SECRET_KEY']}",
+        "Content-Type": "application/json",
+        "User-Agent": "VeraWeb/1.1",
+    }
     data = {
         "tx_ref": txn_ref,
         "amount": float(amount),
@@ -27,8 +31,8 @@ def create_payment(
     try:
         response = requests.post(url, headers=headers, json=data)
         return response.json()
-    except requests.exceptions.RequestException as err:
-        print(err)
+    except Exception as e:
+        print(e)
         return {}
 
 

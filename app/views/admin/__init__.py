@@ -26,10 +26,7 @@ def index():
     query = (
         sa.select(sa.func.count())
         .select_from(Order)
-        .where(
-            Order.status == OrderStatus.pending
-            or Order.status == OrderStatus.on_the_way
-        )
+        .where(Order.status == OrderStatus.sent)
     )
     stats["pending_orders"] = db.session.scalar(query)
 

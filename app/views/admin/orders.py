@@ -13,14 +13,20 @@ def orders():
     orders = db.session.scalars(
         sa.select(Order)
         .where(
-            Order.status == OrderStatus.sent and Order.status == OrderStatus.on_the_way
+            sa.or_(
+                Order.status == OrderStatus.sent, Order.status == OrderStatus.on_the_way
+            )
         )
         .order_by(Order.updated_at.desc())
     )
     other_orders = db.session.scalars(
         sa.select(Order)
         .where(
-            Order.status != OrderStatus.sent or Order.status != OrderStatus.on_the_way
+            sa.and_(
+                Order.status != OrderStatus.sent,
+                Order.status != OrderStatus.on_the_way,
+                Order.status != OrderStatus.pending,
+            )
         )
         .order_by(Order.updated_at.desc())
     )
@@ -44,7 +50,9 @@ def orders_in_location(location_id):
         sa.select(Order)
         .where(Order.pickup_location_id == location_id)
         .where(
-            Order.status == OrderStatus.sent and Order.status == OrderStatus.on_the_way
+            sa.or_(
+                Order.status == OrderStatus.sent, Order.status == OrderStatus.on_the_way
+            )
         )
         .order_by(Order.updated_at.desc())
     )
@@ -52,7 +60,11 @@ def orders_in_location(location_id):
         sa.select(Order)
         .where(Order.pickup_location_id == location_id)
         .where(
-            Order.status != OrderStatus.sent or Order.status != OrderStatus.on_the_way
+            sa.and_(
+                Order.status != OrderStatus.sent,
+                Order.status != OrderStatus.on_the_way,
+                Order.status != OrderStatus.pending,
+            )
         )
         .order_by(Order.updated_at.desc())
     )

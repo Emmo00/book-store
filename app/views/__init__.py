@@ -1,6 +1,14 @@
 from uuid import uuid4
 
-from flask import Blueprint, render_template, current_app, session, request, url_for
+from flask import (
+    Blueprint,
+    render_template,
+    current_app,
+    session,
+    request,
+    url_for,
+    abort,
+)
 import sqlalchemy as sa
 
 from .books import books_bp
@@ -42,3 +50,13 @@ def before_request():
     if not session.get("user_id"):
         print("no session")
         session["user_id"] = str(uuid4())
+
+
+@client_bp.errorhandler(404)
+def not_found(e):
+    return render_template("error.html", code=404)
+
+
+@client_bp.errorhandler(500)
+def not_found(e):
+    return render_template("error.html", code=500)

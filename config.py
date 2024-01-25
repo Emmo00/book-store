@@ -19,6 +19,5 @@ class Config:
     ADMIN_PASS = getenv("ADMIN_PASS") or "admin"
     FLW_PUBLIC_KEY = getenv("FLW_PUBLIC_KEY")
     FLW_SECRET_KEY = getenv("FLW_SECRET_KEY")
-    FLW_SECRET_HASH = getenv("FLW_SECRET_HASH")
     APP_NAME = getenv("APP_NAME")
     APP_URL = getenv("APP_URL")

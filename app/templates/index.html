@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="search">
+<form class="search" action="/" method="POST">
   <input
     class="br-5"
     type="search"
@@ -9,7 +9,13 @@
     id="search"
     placeholder="Search Books"
   />
-</div>
+  
+  {% if results %}
+    <div class="search_box">
+      {% include 'search_query.html' %}
+    </div>
+  {% endif %}
+</form>
 
 <section class="books">
   {% for book in books %}

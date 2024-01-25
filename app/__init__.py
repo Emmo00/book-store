@@ -1,6 +1,6 @@
 from os import path
 
-from flask import Flask, send_from_directory, send_file
+from flask import Flask, send_file
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_status import FlaskStatus
@@ -22,6 +22,9 @@ def create_app(config=Config):
     migrate.init_app(app, db)
     FlaskStatus(app)
     Session(app)
+
+    with app.app_context():
+        db.create_all()
 
     from app.views import client_bp
     from app.views.admin import admin_bp

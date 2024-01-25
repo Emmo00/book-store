@@ -23,6 +23,15 @@ python -m pip install -r requirements.txt
 ### Environment variables
 
 ```bash
+SECRET_KEY=
+DATABASE_URI=
+
+UPLOADS_FOLDER=
+
+ADMIN_USER=
+ADMIN_PASS=
+
+
 FLW_PUBLIC_KEY=
 FLW_SECRET_KEY=
 

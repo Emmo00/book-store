@@ -22,7 +22,7 @@ from app import db
 client_bp = Blueprint("client", __name__)
 
 
-@client_bp.route("/", strict_slashes=False)
+@client_bp.route("/", strict_slashes=False, methods=["GET", "POST"])
 @client_bp.route("/home")
 def index():
     page = request.args.get("page", 1, type=int)
@@ -32,11 +32,14 @@ def index():
     )
     next_url = url_for("client.index", page=books.next_num) if books.has_next else None
     prev_url = url_for("client.index", page=books.prev_num) if books.has_prev else None
+
+    search_query = request.form.get('search')
+    search_results = Book.query.filter(Book.title.ilike(f'%{search_query}%')).all()
+    
     print(session["user_id"])
     return render_template(
-        "index.html", books=books.items, next_url=next_url, prev_url=prev_url
+        "index.html", books=books.items, next_url=next_url, prev_url=prev_url, results=search_results
     )
-
 
 client_bp.register_blueprint(books_bp)
 client_bp.register_blueprint(cart_bp)

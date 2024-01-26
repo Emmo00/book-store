@@ -8,7 +8,7 @@ load_dotenv(find_dotenv())
 
 class Config:
     SECRET_KEY = getenv("SECRET_KEY") or "secret_key"
-    SQLALCHEMY_DATABASE_URI = getenv("DATABASE_URI") or "sqlite:///verasworld.db"
+    SQLALCHEMY_DATABASE_URI = getenv("DATABASE_URI") or "sqlite:///bookstore.db"
     SESSION_TYPE = "sqlalchemy"
     SESSION_PERMANENT = True
     SESSION_COOKIE_NAME = "X-Auth"

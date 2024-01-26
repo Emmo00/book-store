@@ -10,7 +10,7 @@ def create_payment(
     headers = {
         "Authorization": f"Bearer {current_app.config['FLW_SECRET_KEY']}",
         "Content-Type": "application/json",
-        "User-Agent": "VeraWeb/1.1",
+        "User-Agent": "BookStore/1.1",
     }
     data = {
         "tx_ref": txn_ref,

@@ -11,7 +11,6 @@ books_bp = Blueprint("books", __name__, url_prefix="/books")
 def book(bookId):
     book = db.session.scalar(sa.select(Book).where(Book.id == bookId))
     if not book:
-        print("here")
         return jsonify({"message": "Not Found", "data": {}}), 404
     return jsonify(
         {

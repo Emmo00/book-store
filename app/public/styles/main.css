@@ -32,10 +32,6 @@ body {
   overflow-x: hidden;
 }
 
-main {
-  padding: 4rem;
-}
-
 
 /********************/
 /*  Nav and Alerts  */
@@ -51,7 +47,7 @@ nav {
   position: fixed;
   top: 0px;
   backdrop-filter: blur(8px);
-  z-index: 100;
+  z-index: 90;
 }
 
 @keyframes alert {
@@ -93,6 +89,7 @@ nav {
   animation-duration: 2.5s;
   animation-delay: 0s;
   animation-fill-mode: forwards;
+  z-index: 100;
 }
 
 .logo {

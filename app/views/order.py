@@ -20,7 +20,6 @@ def orders():
 
 @orders_bp.route("/<order_id>", strict_slashes=False)
 def order(order_id):
-    print(current_app.config["APP_URL"])
     order = db.first_or_404(sa.select(Order).where(Order.id == order_id))
     return render_template(
         "order_preview.html",

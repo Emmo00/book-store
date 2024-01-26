@@ -40,8 +40,6 @@ def create_app(config=Config):
 
     app.static_folder = "public"
 
-    print(Config.APP_URL)
-
     @app.route("/uploads/<path:file_name>")
     def uploads(file_name):
         return send_file(path.join("..", app.config["UPLOADS_FOLDER"], file_name))

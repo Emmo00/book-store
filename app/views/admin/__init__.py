@@ -51,7 +51,6 @@ def index():
     stats["new_customers"] = db.session.scalar(query)
 
     previous_month = month_begin - timedelta(days=30)
-    print(month_begin, previous_month)
     query = (
         sa.select(sa.func.count())
         .select_from(Customer)

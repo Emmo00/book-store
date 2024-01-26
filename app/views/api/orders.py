@@ -22,7 +22,6 @@ def create_order():
         or not payload.get("location")
         or payload.get("location") == "default"
     ):
-        print("incomplete info")
         return jsonify({"message": "Incomplete information"}), 400
     # CREATE CUSTOMER
     customer_id = session.get("user_id")

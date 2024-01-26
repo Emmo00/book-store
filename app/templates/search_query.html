@@ -1,0 +1,14 @@
+<div class="container">
+  {% if results %}
+    {% for result in results %}
+      <a href="/books/{{ result.id }}">
+        <span class="tile">
+          {{ result.title }}: {{ result.description }}
+        </span>
+      </a>
+    {% endfor %}
+  {% else %}
+    <span>Search not found</span>
+  {% endif %}
+</div>
+

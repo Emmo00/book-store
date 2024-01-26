@@ -1,3 +1,4 @@
+import os
 from os import path
 
 from flask import Flask, send_file
@@ -33,6 +34,9 @@ def create_app(config=Config):
     app.register_blueprint(client_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(api_bp)
+
+    if not path.exists(config.UPLOADS_FOLDER):
+        os.mkdir(config.UPLOADS_FOLDER)
 
     app.static_folder = "public"
 
